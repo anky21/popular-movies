@@ -1,10 +1,12 @@
 package me.anky.popularmovies;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.GridView;
 
 import java.util.Arrays;
@@ -50,6 +52,13 @@ public class MovieActivityFragment extends Fragment {
         // Get a reference to the GridView, and attach this adapter to it.
         GridView gridView = (GridView) rootView.findViewById(R.id.movie_activity_grid_view);
         gridView.setAdapter(popularMovieAdapter);
+        gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                Intent intent = new Intent(getActivity(), DetailedActivity.class);
+                startActivity(intent);
+            }
+        });
 
         return rootView;
     }
