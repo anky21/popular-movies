@@ -5,19 +5,21 @@ package me.anky.popularmovies;
  */
 
 public class PopularMovie {
-    /** Image resource ID for the poster */
+    /**
+     * Image resource ID for the poster
+     */
     private int mPosterResourceId;
 
     /**
      * Construct a new {@link PopularMovie} object
      *
-     * @param  posterResourceId is the resource ID of the movie poster
+     * @param posterResourceId is the resource ID of the movie poster
      */
-    public PopularMovie(int posterResourceId){
+    public PopularMovie(int posterResourceId) {
         mPosterResourceId = posterResourceId;
     }
 
-    public int getPosterResourceId(){
+    public int getPosterResourceId() {
         return mPosterResourceId;
     }
 }

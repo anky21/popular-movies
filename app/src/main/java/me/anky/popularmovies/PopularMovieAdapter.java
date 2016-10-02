@@ -16,18 +16,19 @@ import java.util.List;
 
 /**
  * {@link PopularMovieAdapter} is an {@link PopularMovie} that provides the layout for each list
- *  item on a data source, which is a list of {@link PopularMovie} objects
+ * item on a data source, which is a list of {@link PopularMovie} objects
  */
 public class PopularMovieAdapter extends ArrayAdapter<PopularMovie> {
     private static final String LOG_TAG = PopularMovieAdapter.class.getSimpleName();
 
     /**
-     *  Create a new {@link PopularMovieAdapter} object
-     *  @param context is the current context that the adapter is being created in
-     *  @param  popularMovies is the list of {@link PopularMovie}s to be displayed
+     * Create a new {@link PopularMovieAdapter} object
+     *
+     * @param context       is the current context that the adapter is being created in
+     * @param popularMovies is the list of {@link PopularMovie}s to be displayed
      */
 
-    public PopularMovieAdapter(Context context, List<PopularMovie> popularMovies){
+    public PopularMovieAdapter(Context context, List<PopularMovie> popularMovies) {
         super(context, 0, popularMovies);
     }
 
@@ -36,7 +37,7 @@ public class PopularMovieAdapter extends ArrayAdapter<PopularMovie> {
     public View getView(int position, View convertView, ViewGroup parent) {
         // Check if an existing view is being reused, otherwise inflate the view
         View listItemView = convertView;
-        if(listItemView == null){
+        if (listItemView == null) {
             listItemView = LayoutInflater.from(getContext()).inflate(
                     R.layout.list_item, parent, false);
         }
@@ -44,7 +45,7 @@ public class PopularMovieAdapter extends ArrayAdapter<PopularMovie> {
         PopularMovie currentMovie = getItem(position);
 
         // Find the ImageView in the list_item.xml layout with the ID image
-        ImageView imageView = (ImageView)listItemView.findViewById(R.id.poster_of_the_movie);
+        ImageView imageView = (ImageView) listItemView.findViewById(R.id.poster_of_the_movie);
         // Display the image based on the resource ID
         imageView.setImageResource(currentMovie.getPosterResourceId());
 

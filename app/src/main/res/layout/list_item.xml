@@ -8,6 +8,6 @@
         android:id="@+id/poster_of_the_movie"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:scaleType="fitXY"/>
+        android:scaleType="fitXY" />
 
 </FrameLayout>
