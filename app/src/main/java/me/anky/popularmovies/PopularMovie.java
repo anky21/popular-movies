@@ -40,7 +40,7 @@ public class PopularMovie implements Parcelable {
         parcel.writeInt(mPosterResourceId);
     }
 
-    public final Parcelable.Creator<PopularMovie> CREATOR =
+    public static final Parcelable.Creator<PopularMovie> CREATOR =
             new Parcelable.Creator<PopularMovie>(){
 
                 @Override

@@ -76,7 +76,8 @@ public class MovieActivityFragment extends Fragment {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 Intent intent = new Intent(getActivity(), DetailedActivity.class);
-                PopularMovie popularMovie = popularMovieAdapter.getItem(i);
+                PopularMovie movieData = movieList.get(i);
+                intent.putExtra("movieData", movieData);
                 startActivity(intent);
             }
         });
