@@ -11,23 +11,23 @@ public class PopularMovie implements Parcelable {
     /**
      * Image resource ID for the poster
      */
-    private int mPosterResourceId;
+    private String mPosterPath;
 
     /**
      * Construct a new {@link PopularMovie} object
      *
-     * @param posterResourceId is the resource ID of the movie poster
+     * @param posterPath is the path of the movie poster
      */
-    public PopularMovie(int posterResourceId) {
-        mPosterResourceId = posterResourceId;
+    public PopularMovie(String posterPath) {
+        mPosterPath = posterPath;
     }
 
     private PopularMovie(Parcel in){
-        mPosterResourceId=in.readInt();
+        mPosterPath=in.readString();
     }
 
-    public int getPosterResourceId() {
-        return mPosterResourceId;
+    public String getPosterPath() {
+        return mPosterPath;
     }
 
     @Override
@@ -37,7 +37,7 @@ public class PopularMovie implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel parcel, int i) {
-        parcel.writeInt(mPosterResourceId);
+        parcel.writeString(mPosterPath);
     }
 
     public static final Parcelable.Creator<PopularMovie> CREATOR =

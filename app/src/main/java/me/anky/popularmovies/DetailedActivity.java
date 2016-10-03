@@ -16,10 +16,10 @@ public class DetailedActivity extends AppCompatActivity {
         if(intent != null && intent.hasExtra("movieData")){
             PopularMovie movieData = intent.getParcelableExtra("movieData");
 
-            int posterResourceId = movieData.getPosterResourceId();
+            String posterPath = movieData.getPosterPath();
 
             TextView textView = (TextView)findViewById(R.id.text_view);
-            textView.setText(posterResourceId);
+            textView.setText(posterPath);
         }
     }
 }

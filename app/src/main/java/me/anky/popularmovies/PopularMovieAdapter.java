@@ -2,12 +2,16 @@ package me.anky.popularmovies;
 
 import android.content.Context;
 import android.support.annotation.NonNull;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 
+import com.squareup.picasso.Picasso;
+
+import java.net.MalformedURLException;
 import java.util.List;
 
 /**
@@ -44,10 +48,20 @@ public class PopularMovieAdapter extends ArrayAdapter<PopularMovie> {
         // Get the {@link PopularMovie} object located at this position in the list
         PopularMovie currentMovie = getItem(position);
 
+        String posterPath = currentMovie.getPosterPath();
+        String myUrl = null;
+        try {
+            myUrl = QueryUtils.getImageUrl(posterPath);
+            Log.v(LOG_TAG,"Testing: Url" + myUrl);
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+        }
+
         // Find the ImageView in the list_item.xml layout with the ID image
         ImageView imageView = (ImageView) listItemView.findViewById(R.id.poster_of_the_movie);
         // Display the image based on the resource ID
-        imageView.setImageResource(currentMovie.getPosterResourceId());
+//        imageView.setImageResource(currentMovie.getPosterPath());
+        Picasso.with(getContext()).load(myUrl).into(imageView);
 
         // Return the whole list item layout so that it can be shown in the GridView
         return listItemView;

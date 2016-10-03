@@ -23,22 +23,22 @@ public class MovieActivityFragment extends Fragment {
     private ArrayList<PopularMovie> movieList;
 
     PopularMovie[] popularMovies = {
-            new PopularMovie(R.drawable.a),
-            new PopularMovie(R.drawable.b),
-            new PopularMovie(R.drawable.c),
-            new PopularMovie(R.drawable.d),
-            new PopularMovie(R.drawable.a),
-            new PopularMovie(R.drawable.b),
-            new PopularMovie(R.drawable.c),
-            new PopularMovie(R.drawable.d),
-            new PopularMovie(R.drawable.a),
-            new PopularMovie(R.drawable.b),
-            new PopularMovie(R.drawable.c),
-            new PopularMovie(R.drawable.d),
-            new PopularMovie(R.drawable.a),
-            new PopularMovie(R.drawable.b),
-            new PopularMovie(R.drawable.c),
-            new PopularMovie(R.drawable.d),
+            new PopularMovie("/5N20rQURev5CNDcMjHVUZhpoCNC.jpg"),
+            new PopularMovie("/zSouWWrySXshPCT4t3UKCQGayyo.jpg"),
+            new PopularMovie("/6FxOPJ9Ysilpq0IgkrMJ7PubFhq.jpg"),
+            new PopularMovie("/e1mjopzAS2KNsvpbpahQ1a6SkSn.jpg"),
+            new PopularMovie("/5N20rQURev5CNDcMjHVUZhpoCNC.jpg"),
+            new PopularMovie("/zSouWWrySXshPCT4t3UKCQGayyo.jpg"),
+            new PopularMovie("/6FxOPJ9Ysilpq0IgkrMJ7PubFhq.jpg"),
+            new PopularMovie("/e1mjopzAS2KNsvpbpahQ1a6SkSn.jpg"),
+            new PopularMovie("/5N20rQURev5CNDcMjHVUZhpoCNC.jpg"),
+            new PopularMovie("/zSouWWrySXshPCT4t3UKCQGayyo.jpg"),
+            new PopularMovie("/6FxOPJ9Ysilpq0IgkrMJ7PubFhq.jpg"),
+            new PopularMovie("/e1mjopzAS2KNsvpbpahQ1a6SkSn.jpg"),
+            new PopularMovie("/5N20rQURev5CNDcMjHVUZhpoCNC.jpg"),
+            new PopularMovie("/zSouWWrySXshPCT4t3UKCQGayyo.jpg"),
+            new PopularMovie("/6FxOPJ9Ysilpq0IgkrMJ7PubFhq.jpg"),
+            new PopularMovie("/e1mjopzAS2KNsvpbpahQ1a6SkSn.jpg"),
     };
 
     public MovieActivityFragment() {
