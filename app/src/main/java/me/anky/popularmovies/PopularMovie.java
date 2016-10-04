@@ -20,11 +20,11 @@ public class PopularMovie implements Parcelable {
     /**
      * Construct a new {@link PopularMovie} object
      *
-     * @param posterPath is the path of the movie poster
+     * @param posterPath    is the path of the movie poster
      * @param originalTitle is the title
-     * @param overview is the plot
-     * @param voteAverage is the rating
-     * @param releaseDate is the release date
+     * @param overview      is the plot
+     * @param voteAverage   is the rating
+     * @param releaseDate   is the release date
      */
     public PopularMovie(String posterPath, String originalTitle, String overview,
                         double voteAverage, String releaseDate) {
@@ -35,7 +35,7 @@ public class PopularMovie implements Parcelable {
         mRleaseDate = releaseDate;
     }
 
-    private PopularMovie(Parcel in){
+    private PopularMovie(Parcel in) {
         mPosterPath = in.readString();
         mOriginalTitle = in.readString();
         mOverview = in.readString();
@@ -78,7 +78,7 @@ public class PopularMovie implements Parcelable {
     }
 
     public static final Parcelable.Creator<PopularMovie> CREATOR =
-            new Parcelable.Creator<PopularMovie>(){
+            new Parcelable.Creator<PopularMovie>() {
 
                 @Override
                 public PopularMovie createFromParcel(Parcel parcel) {
