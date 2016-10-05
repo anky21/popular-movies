@@ -52,7 +52,7 @@ public class DetailedActivity extends AppCompatActivity {
             // Change decimal digits from 2 to 1
             DecimalFormat df = new DecimalFormat("#.#");
             String voteAverageString = df.format(voteAverage);
-            voteAverageTV.setText("Rating: "+ voteAverageString + "/10");
+            voteAverageTV.setText("Rating: " + voteAverageString + "/10");
 
             // Display the overview of the movie
             TextView plotTV = (TextView) findViewById(R.id.tv_overview);

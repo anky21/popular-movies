@@ -18,10 +18,11 @@ public class MovieLoader extends AsyncTaskLoader<List<PopularMovie>> {
 
     /**
      * Constructs a new {@link MovieLoader}
+     *
      * @param context of the activity
-     * @param url to load data from
+     * @param url     to load data from
      */
-    public MovieLoader(Context context, String url){
+    public MovieLoader(Context context, String url) {
         super(context);
         mUrl = url;
     }
@@ -33,11 +34,12 @@ public class MovieLoader extends AsyncTaskLoader<List<PopularMovie>> {
 
     /**
      * This is on a background thread
+     *
      * @return a list of movies
      */
     @Override
     public List<PopularMovie> loadInBackground() {
-        if(mUrl == null){
+        if (mUrl == null) {
             return null;
         }
         // Perform the network request, parse the response, and extract a list of movies

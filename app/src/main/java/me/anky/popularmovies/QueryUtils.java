@@ -37,17 +37,18 @@ public final class QueryUtils {
 
     /**
      * Query the Movie DB and return an {@link List} object to represent multiple movies
+     *
      * @param requestUrl is a URL used to make an HTTP request
      * @return returns a list of movie data
      */
-    public static List<PopularMovie> fetchMovieData (String requestUrl) {
+    public static List<PopularMovie> fetchMovieData(String requestUrl) {
         URL url = createUrl(requestUrl);
 
         // Perform HTTP request and receive a Json response
         String jsonResponse = null;
         try {
             jsonResponse = makeHttpRequest(url);
-        } catch (IOException e){
+        } catch (IOException e) {
             Log.e(LOG_TAG, "Testing: error closing input stream", e);
         }
 
@@ -69,9 +70,9 @@ public final class QueryUtils {
     }
 
     // Make an HTTP request and return a String as the response
-    private static String makeHttpRequest(URL url) throws IOException{
+    private static String makeHttpRequest(URL url) throws IOException {
         String jsonResponse = "";
-        if (url == null){
+        if (url == null) {
             return jsonResponse;
         }
         HttpURLConnection urlConnection = null;
@@ -82,7 +83,7 @@ public final class QueryUtils {
             urlConnection.setReadTimeout(8000); //in milliseconds
             urlConnection.setConnectTimeout(12000); // in milliseconds
             urlConnection.connect();
-            if(urlConnection.getResponseCode() == 200){
+            if (urlConnection.getResponseCode() == 200) {
                 inputStream = urlConnection.getInputStream();
                 jsonResponse = readFromStream(inputStream);
             } else {
@@ -91,10 +92,10 @@ public final class QueryUtils {
         } catch (IOException e) {
             Log.e(LOG_TAG, "Testing: Problem retrieving the JSON results", e);
         } finally {
-            if(urlConnection != null){
+            if (urlConnection != null) {
                 urlConnection.disconnect();
             }
-            if(inputStream != null){
+            if (inputStream != null) {
                 inputStream.close();
             }
         }
@@ -106,12 +107,12 @@ public final class QueryUtils {
      */
     private static String readFromStream(InputStream inputStream) throws IOException {
         StringBuilder output = new StringBuilder();
-        if(inputStream != null){
+        if (inputStream != null) {
             InputStreamReader inputStreamReader =
                     new InputStreamReader(inputStream, Charset.forName("UTF-8"));
             BufferedReader reader = new BufferedReader(inputStreamReader);
             String line = reader.readLine();
-            while (line != null){
+            while (line != null) {
                 output.append(line);
                 line = reader.readLine();
             }
@@ -123,12 +124,12 @@ public final class QueryUtils {
      * Return a list of {@link PopularMovie} objects built up from parsing a Json response
      */
 
-    public static List<PopularMovie> extractFeatureFromJson(String movieJson){
+    public static List<PopularMovie> extractFeatureFromJson(String movieJson) {
         // Create an empty ArrayList to add movie data into
         List<PopularMovie> popularMovies = new ArrayList<>();
 
         // If the Json string is empty or null, return early
-        if(TextUtils.isEmpty(movieJson)){
+        if (TextUtils.isEmpty(movieJson)) {
             return null;
         }
 
@@ -138,7 +139,7 @@ public final class QueryUtils {
             JSONObject baseJsonResponse = new JSONObject(movieJson);
             JSONArray resultsArray = baseJsonResponse.optJSONArray("results");
 
-            for(int i=0; i<resultsArray.length();i++){
+            for (int i = 0; i < resultsArray.length(); i++) {
                 JSONObject movieData = resultsArray.getJSONObject(i);
 
                 // Extract parameter values

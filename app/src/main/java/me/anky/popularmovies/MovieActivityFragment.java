@@ -4,14 +4,19 @@ import android.app.LoaderManager;
 import android.content.Context;
 import android.content.Intent;
 import android.content.Loader;
+import android.content.SharedPreferences;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.Uri;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -29,8 +34,8 @@ public class MovieActivityFragment extends Fragment implements
 
     private PopularMovieAdapter popularMovieAdapter;
 
-    //Needs an API key to request data from the Movie DB
-    private static final String API_KEY = "API key for the Movie DB";
+    //Need an API key to request data from the Movie DB
+    private static final String API_KEY = "USE YOUR OWN API KEY";
 
     private static final String MOVIE_REQUEST_URL =
             "http://api.themoviedb.org/3/discover/movie";
@@ -45,11 +50,30 @@ public class MovieActivityFragment extends Fragment implements
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        if(savedInstanceState == null || !savedInstanceState.containsKey("movies")) {
+        // Add this line to handle menu events
+        setHasOptionsMenu(true);
+
+        if (savedInstanceState == null || !savedInstanceState.containsKey("movies")) {
             movieList = new ArrayList<PopularMovie>();
         } else {
             movieList = savedInstanceState.getParcelableArrayList("movies");
         }
+    }
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        inflater.inflate(R.menu.moviefragment, menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+        if (id == R.id.action_settings) {
+            Intent settingsIntent = new Intent(getActivity(), SettingsActivity.class);
+            startActivity(settingsIntent);
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     @Override
@@ -77,7 +101,7 @@ public class MovieActivityFragment extends Fragment implements
         // Get details on the currently active default data network
         NetworkInfo networkInfo = cm.getActiveNetworkInfo();
         // If there is a network connection, fetch data
-        if(networkInfo != null && networkInfo.isConnected()){
+        if (networkInfo != null && networkInfo.isConnected()) {
             // Get a ref to the LoaderManager, in order to interact with loaders
             LoaderManager loaderManager = getActivity().getLoaderManager();
 
@@ -85,7 +109,7 @@ public class MovieActivityFragment extends Fragment implements
              * Initialise the loader. pass in the int ID constant defined above and pass in null for
              * the bundle. Pass in this activity for the LoaderCallbacks parameter
              */
-            loaderManager.initLoader(MOVIE_LOADER_ID,null,this);
+            loaderManager.initLoader(MOVIE_LOADER_ID, null, this);
         }
 
         gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -102,14 +126,26 @@ public class MovieActivityFragment extends Fragment implements
 
     @Override
     public Loader<List<PopularMovie>> onCreateLoader(int i, Bundle bundle) {
+        SharedPreferences sharedPreferences =
+                PreferenceManager.getDefaultSharedPreferences(getContext());
+        String sortBy = sharedPreferences.getString(
+                getString(R.string.settings_order_by_key),
+                getString(R.string.settings_order_by_default)
+        );
+
+        String releaseDate = "2015-08-01"; // Only show movies after this release date
+        String minimumVoteCount = "200"; // Movies with equal to or greater than minimum vote count
+
         Uri baseUri = Uri.parse(MOVIE_REQUEST_URL);
         Uri.Builder uriBuilder = baseUri.buildUpon();
 
-        uriBuilder.appendQueryParameter("sort_by", "popularity.desc");
+        uriBuilder.appendQueryParameter("sort_by", sortBy);
         uriBuilder.appendQueryParameter("api_key", API_KEY);
+        uriBuilder.appendQueryParameter("release_date.gte", releaseDate);
+        uriBuilder.appendQueryParameter("vote_count.gte", minimumVoteCount);
 
         // Create a new loader for the given URL
-        return new MovieLoader(getContext(),uriBuilder.toString());
+        return new MovieLoader(getContext(), uriBuilder.toString());
     }
 
     @Override
@@ -122,7 +158,7 @@ public class MovieActivityFragment extends Fragment implements
          * If there is a valid list of {@link PopularMovie}s, then add them to the adapter's data
          * set. This will trigger the ListView to update.
          */
-        if(popularMovies != null && !popularMovies.isEmpty()){
+        if (popularMovies != null && !popularMovies.isEmpty()) {
             popularMovieAdapter.addAll(popularMovies);
         }
     }

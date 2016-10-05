@@ -4,8 +4,5 @@
     android:id="@+id/movie_activity_grid_view"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="me.anky.popularmovies.MovieActivity"
     android:numColumns="2"
-    >
-
-</GridView>
+    tools:context="me.anky.popularmovies.MovieActivity"></GridView>
