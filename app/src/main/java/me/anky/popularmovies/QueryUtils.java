@@ -49,7 +49,7 @@ public final class QueryUtils {
         try {
             jsonResponse = makeHttpRequest(url);
         } catch (IOException e) {
-            Log.e(LOG_TAG, "Testing: error closing input stream", e);
+            Log.e(LOG_TAG, "Error closing input stream", e);
         }
 
         // Extract relevant fields from the Json response and create an {@link PopularMovie} object
@@ -64,7 +64,7 @@ public final class QueryUtils {
         try {
             url = new URL(stringUrl);
         } catch (MalformedURLException e) {
-            Log.e(LOG_TAG, "Testing: Error when creating URL", e);
+            Log.e(LOG_TAG, "Error when creating URL", e);
         }
         return url;
     }
@@ -87,10 +87,10 @@ public final class QueryUtils {
                 inputStream = urlConnection.getInputStream();
                 jsonResponse = readFromStream(inputStream);
             } else {
-                Log.e(LOG_TAG, "Testing: URL connection issue" + urlConnection.getResponseCode());
+                Log.e(LOG_TAG, "URL connection issue" + urlConnection.getResponseCode());
             }
         } catch (IOException e) {
-            Log.e(LOG_TAG, "Testing: Problem retrieving the JSON results", e);
+            Log.e(LOG_TAG, "Problem retrieving the JSON results", e);
         } finally {
             if (urlConnection != null) {
                 urlConnection.disconnect();
@@ -160,7 +160,7 @@ public final class QueryUtils {
             }
 
         } catch (JSONException e) {
-            Log.e("QueryUtils", "Testing: problem parsing the Json response", e);
+            Log.e("QueryUtils", "Problem parsing the Json response", e);
         }
         return popularMovies;
     }

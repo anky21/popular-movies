@@ -12,7 +12,6 @@ import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -21,6 +20,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.GridView;
+import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -41,6 +41,7 @@ public class MovieActivityFragment extends Fragment implements
             "http://api.themoviedb.org/3/movie/";
 
     private ArrayList<PopularMovie> movieList;
+    private TextView mEmptyStateTextView;
 
     public MovieActivityFragment() {
         // Required empty public constructor
@@ -93,6 +94,8 @@ public class MovieActivityFragment extends Fragment implements
 
         // Get a reference to the GridView, and attach this adapter to it.
         GridView gridView = (GridView) rootView.findViewById(R.id.movie_activity_grid_view);
+        mEmptyStateTextView = (TextView) rootView.findViewById(R.id.empty_list_view);
+        gridView.setEmptyView(mEmptyStateTextView);
         gridView.setAdapter(popularMovieAdapter);
 
         // Get a reference to the ConnectivityManager to check state of network connectivity
@@ -110,6 +113,13 @@ public class MovieActivityFragment extends Fragment implements
              * the bundle. Pass in this activity for the LoaderCallbacks parameter
              */
             loaderManager.initLoader(MOVIE_LOADER_ID, null, this);
+        } else {
+            // Hide the loading indicator
+            View loadingIndicator = rootView.findViewById(R.id.progress_bar);
+            loadingIndicator.setVisibility(View.GONE);
+
+            // Update empty state with no connection error message
+            mEmptyStateTextView.setText(R.string.no_internet);
         }
 
         gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -148,7 +158,12 @@ public class MovieActivityFragment extends Fragment implements
 
     @Override
     public void onLoadFinished(Loader<List<PopularMovie>> loader, List<PopularMovie> popularMovies) {
-        Log.v(getTag(), "Testing: load finished");
+        // Hide the progress bar when loader is finished
+        View loadingIndicator = getActivity().findViewById(R.id.progress_bar);
+        loadingIndicator.setVisibility(View.GONE);
+
+        // Set empty state text to display "NO movies found" message
+        mEmptyStateTextView.setText(R.string.no_movies_found);
         // Clear the adapter of previous movie data
         popularMovieAdapter.clear();
 
