@@ -38,7 +38,7 @@ public class MovieActivityFragment extends Fragment implements
     private static final String API_KEY = "USE YOUR OWN API KEY";
 
     private static final String MOVIE_REQUEST_URL =
-            "http://api.themoviedb.org/3/discover/movie";
+            "http://api.themoviedb.org/3/movie/";
 
     private ArrayList<PopularMovie> movieList;
 
@@ -133,16 +133,14 @@ public class MovieActivityFragment extends Fragment implements
                 getString(R.string.settings_order_by_default)
         );
 
-        String releaseDate = "2015-08-01"; // Only show movies after this release date
-        String minimumVoteCount = "200"; // Movies with equal to or greater than minimum vote count
+        String releaseDate = "2016-01-01"; // Show movies of the current year
 
         Uri baseUri = Uri.parse(MOVIE_REQUEST_URL);
         Uri.Builder uriBuilder = baseUri.buildUpon();
 
-        uriBuilder.appendQueryParameter("sort_by", sortBy);
-        uriBuilder.appendQueryParameter("api_key", API_KEY);
-        uriBuilder.appendQueryParameter("release_date.gte", releaseDate);
-        uriBuilder.appendQueryParameter("vote_count.gte", minimumVoteCount);
+        uriBuilder.appendPath(sortBy)
+                .appendQueryParameter("api_key", API_KEY)
+                .appendQueryParameter("release_date.gte", releaseDate);
 
         // Create a new loader for the given URL
         return new MovieLoader(getContext(), uriBuilder.toString());

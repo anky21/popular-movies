@@ -16,10 +16,10 @@
 
     <!-- Label for order-by Popularity option -->
     <string name="settings_order_by_popularity_label">Popularity</string>
-    <string name="settings_order_by_popularity_value" translatable="false">popularity.desc</string>
+    <string name="settings_order_by_popularity_value" translatable="false">popular</string>
 
     <!-- Label for order-by Rating option-->
-    <string name="settings_order_by_rating_label">Rating</string>
-    <string name="settings_order_by_rating_value" translatable="false">vote_average.desc</string>
+    <string name="settings_order_by_rating_label">Top rated</string>
+    <string name="settings_order_by_rating_value" translatable="false">top_rated</string>
 
 </resources>
