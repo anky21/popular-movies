@@ -34,7 +34,7 @@ public class MovieActivityFragment extends Fragment implements
 
     private PopularMovieAdapter popularMovieAdapter;
 
-    //Need an API key to request data from the Movie DB
+    //Need an API key to request data from the Movie DB: USE YOUR OWN API KEY
     private static final String API_KEY = "USE YOUR OWN API KEY";
 
     private static final String MOVIE_REQUEST_URL =
@@ -59,6 +59,30 @@ public class MovieActivityFragment extends Fragment implements
         } else {
             movieList = savedInstanceState.getParcelableArrayList("movies");
         }
+
+        // Get a reference to the ConnectivityManager to check state of network connectivity
+        ConnectivityManager cm = (ConnectivityManager)
+                getActivity().getSystemService(Context.CONNECTIVITY_SERVICE);
+        // Get details on the currently active default data network
+        NetworkInfo networkInfo = cm.getActiveNetworkInfo();
+        // If there is a network connection, fetch data
+        if (networkInfo != null && networkInfo.isConnected()) {
+            // Get a ref to the LoaderManager, in order to interact with loaders
+            LoaderManager loaderManager = getActivity().getLoaderManager();
+
+            /**
+             * Initialise the loader. pass in the int ID constant defined above and pass in null for
+             * the bundle. Pass in this activity for the LoaderCallbacks parameter
+             */
+            loaderManager.initLoader(MOVIE_LOADER_ID, null, this);
+        } else {
+            // Hide the loading indicator
+            View loadingIndicator = getActivity().findViewById(R.id.progress_bar);
+            loadingIndicator.setVisibility(View.GONE);
+
+            // Update empty state with no connection error message
+            mEmptyStateTextView.setText(R.string.no_internet);
+        }
     }
 
     @Override
@@ -79,7 +103,6 @@ public class MovieActivityFragment extends Fragment implements
 
     @Override
     public void onSaveInstanceState(Bundle outState) {
-        outState.putParcelableArrayList("movies", movieList);
         super.onSaveInstanceState(outState);
     }
 
@@ -97,30 +120,6 @@ public class MovieActivityFragment extends Fragment implements
         mEmptyStateTextView = (TextView) rootView.findViewById(R.id.empty_list_view);
         gridView.setEmptyView(mEmptyStateTextView);
         gridView.setAdapter(popularMovieAdapter);
-
-        // Get a reference to the ConnectivityManager to check state of network connectivity
-        ConnectivityManager cm = (ConnectivityManager)
-                getActivity().getSystemService(Context.CONNECTIVITY_SERVICE);
-        // Get details on the currently active default data network
-        NetworkInfo networkInfo = cm.getActiveNetworkInfo();
-        // If there is a network connection, fetch data
-        if (networkInfo != null && networkInfo.isConnected()) {
-            // Get a ref to the LoaderManager, in order to interact with loaders
-            LoaderManager loaderManager = getActivity().getLoaderManager();
-
-            /**
-             * Initialise the loader. pass in the int ID constant defined above and pass in null for
-             * the bundle. Pass in this activity for the LoaderCallbacks parameter
-             */
-            loaderManager.initLoader(MOVIE_LOADER_ID, null, this);
-        } else {
-            // Hide the loading indicator
-            View loadingIndicator = rootView.findViewById(R.id.progress_bar);
-            loadingIndicator.setVisibility(View.GONE);
-
-            // Update empty state with no connection error message
-            mEmptyStateTextView.setText(R.string.no_internet);
-        }
 
         gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -143,14 +142,11 @@ public class MovieActivityFragment extends Fragment implements
                 getString(R.string.settings_order_by_default)
         );
 
-        String releaseDate = "2016-01-01"; // Show movies of the current year
-
         Uri baseUri = Uri.parse(MOVIE_REQUEST_URL);
         Uri.Builder uriBuilder = baseUri.buildUpon();
 
         uriBuilder.appendPath(sortBy)
-                .appendQueryParameter("api_key", API_KEY)
-                .appendQueryParameter("release_date.gte", releaseDate);
+                .appendQueryParameter("api_key", API_KEY);
 
         // Create a new loader for the given URL
         return new MovieLoader(getContext(), uriBuilder.toString());
