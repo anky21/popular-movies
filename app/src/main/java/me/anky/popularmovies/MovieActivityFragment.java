@@ -12,6 +12,7 @@ import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -20,6 +21,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.GridView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -30,6 +32,7 @@ import java.util.List;
  */
 public class MovieActivityFragment extends Fragment implements
         LoaderManager.LoaderCallbacks<List<PopularMovie>> {
+    private static final String LOG_TAG = MovieActivity.class.getSimpleName();
     private static final int MOVIE_LOADER_ID = 1;
 
     private PopularMovieAdapter popularMovieAdapter;
@@ -42,6 +45,7 @@ public class MovieActivityFragment extends Fragment implements
 
     private ArrayList<PopularMovie> movieList;
     private TextView mEmptyStateTextView;
+    private ProgressBar mProgressBar;
 
     public MovieActivityFragment() {
         // Required empty public constructor
@@ -50,23 +54,9 @@ public class MovieActivityFragment extends Fragment implements
     @Override
     public void onResume() {
         super.onResume();
-//
-//        // Get a reference to the ConnectivityManager to check state of network connectivity
-//        ConnectivityManager cm = (ConnectivityManager)
-//                getActivity().getSystemService(Context.CONNECTIVITY_SERVICE);
-//        // Get details on the currently active default data network
-//        NetworkInfo networkInfo = cm.getActiveNetworkInfo();
-//        // If there is a network connection, fetch data
-//        if (networkInfo != null && networkInfo.isConnected()) {
+
+        // Restart the Loader onResume
             getActivity().getLoaderManager().restartLoader(MOVIE_LOADER_ID, null, this);
-//        } else {
-//            // Hide the loading indicator
-//            View loadingIndicator = getActivity().findViewById(R.id.progress_bar);
-//            loadingIndicator.setVisibility(View.GONE);
-//
-//            // Update empty state with no connection error message
-//            mEmptyStateTextView.setText(R.string.no_internet);
-//        }
     }
 
     @Override
@@ -81,6 +71,16 @@ public class MovieActivityFragment extends Fragment implements
         } else {
             movieList = savedInstanceState.getParcelableArrayList("movies");
         }
+
+
+//            // Get a ref to the LoaderManager, in order to interact with loaders
+            LoaderManager loaderManager = getActivity().getLoaderManager();
+
+            /**
+             * Initialise the loader. pass in the int ID constant defined above and pass in null for
+             * the bundle. Pass in this activity for the LoaderCallbacks parameter
+             */
+            loaderManager.initLoader(MOVIE_LOADER_ID, null, this);
     }
 
     @Override
@@ -109,6 +109,8 @@ public class MovieActivityFragment extends Fragment implements
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View rootView = inflater.inflate(R.layout.movie_activity_fragment, container, false);
+
+        mProgressBar = (ProgressBar)rootView.findViewById(R.id.progress_bar);
         // Create a new {@link ArrayAdapter} of movies
         popularMovieAdapter = new PopularMovieAdapter(getActivity(),
                 new ArrayList<PopularMovie>());
@@ -118,30 +120,6 @@ public class MovieActivityFragment extends Fragment implements
         mEmptyStateTextView = (TextView) rootView.findViewById(R.id.empty_list_view);
         gridView.setEmptyView(mEmptyStateTextView);
         gridView.setAdapter(popularMovieAdapter);
-
-        // Get a reference to the ConnectivityManager to check state of network connectivity
-        ConnectivityManager cm = (ConnectivityManager)
-                getActivity().getSystemService(Context.CONNECTIVITY_SERVICE);
-        // Get details on the currently active default data network
-        NetworkInfo networkInfo = cm.getActiveNetworkInfo();
-        // If there is a network connection, fetch data
-        if (networkInfo != null && networkInfo.isConnected()) {
-            // Get a ref to the LoaderManager, in order to interact with loaders
-            LoaderManager loaderManager = getActivity().getLoaderManager();
-
-            /**
-             * Initialise the loader. pass in the int ID constant defined above and pass in null for
-             * the bundle. Pass in this activity for the LoaderCallbacks parameter
-             */
-            loaderManager.initLoader(MOVIE_LOADER_ID, null, this);
-        } else {
-            // Hide the loading indicator
-            View loadingIndicator = rootView.findViewById(R.id.progress_bar);
-            loadingIndicator.setVisibility(View.GONE);
-
-            // Update empty state with no connection error message
-            mEmptyStateTextView.setText(R.string.no_internet);
-        }
 
         gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -157,6 +135,7 @@ public class MovieActivityFragment extends Fragment implements
 
     @Override
     public Loader<List<PopularMovie>> onCreateLoader(int i, Bundle bundle) {
+        Log.v(LOG_TAG, "Testing: Load started");
         SharedPreferences sharedPreferences =
                 PreferenceManager.getDefaultSharedPreferences(getContext());
         String sortBy = sharedPreferences.getString(
@@ -177,11 +156,22 @@ public class MovieActivityFragment extends Fragment implements
     @Override
     public void onLoadFinished(Loader<List<PopularMovie>> loader, List<PopularMovie> popularMovies) {
         // Hide the progress bar when loader is finished
-        View loadingIndicator = getActivity().findViewById(R.id.progress_bar);
-        loadingIndicator.setVisibility(View.GONE);
-
-        // Set empty state text to display "NO movies found" message
-        mEmptyStateTextView.setText(R.string.no_movies_found);
+        mProgressBar.setVisibility(View.GONE);
+        // Get a reference to the ConnectivityManager to check state of network connectivity
+        ConnectivityManager cm = (ConnectivityManager)
+                getActivity().getSystemService(Context.CONNECTIVITY_SERVICE);
+        // Get details on the currently active default data network
+        NetworkInfo networkInfo = cm.getActiveNetworkInfo();
+        // If there is no network connectivity
+        if (networkInfo == null || !networkInfo.isConnected()) {
+            // Hide the ProgressBAr
+            mProgressBar.setVisibility(View.GONE);
+            // Update empty state with no connection error message
+            mEmptyStateTextView.setText(R.string.no_internet);
+        }else {
+            // Set empty state text to display "NO movies found" message
+            mEmptyStateTextView.setText(R.string.no_movies_found);
+        }
         // Clear the adapter of previous movie data
         popularMovieAdapter.clear();
 
