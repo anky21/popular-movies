@@ -16,18 +16,21 @@ public class PopularMovie implements Parcelable {
     private String mOverview;
     private double mVoteAverage;
     private String mRleaseDate;
+    private String mMovieId;
 
     /**
      * Construct a new {@link PopularMovie} object
      *
+     * @param movieId   is the ID of the movie
      * @param posterPath    is the path of the movie poster
      * @param originalTitle is the title
      * @param overview      is the plot
      * @param voteAverage   is the rating
      * @param releaseDate   is the release date
      */
-    public PopularMovie(String posterPath, String originalTitle, String overview,
+    public PopularMovie(String movieId, String posterPath, String originalTitle, String overview,
                         double voteAverage, String releaseDate) {
+        mMovieId = movieId;
         mPosterPath = posterPath;
         mOriginalTitle = originalTitle;
         mOverview = overview;
@@ -36,11 +39,16 @@ public class PopularMovie implements Parcelable {
     }
 
     private PopularMovie(Parcel in) {
+        mMovieId = in.readString();
         mPosterPath = in.readString();
         mOriginalTitle = in.readString();
         mOverview = in.readString();
         mVoteAverage = in.readDouble();
         mRleaseDate = in.readString();
+    }
+
+    public String getMovieId(){
+        return mMovieId;
     }
 
     public String getPosterPath() {
@@ -70,6 +78,7 @@ public class PopularMovie implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel parcel, int i) {
+        parcel.writeString(mMovieId);
         parcel.writeString(mPosterPath);
         parcel.writeString(mOriginalTitle);
         parcel.writeString(mOverview);

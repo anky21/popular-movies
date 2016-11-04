@@ -143,6 +143,7 @@ public final class QueryUtils {
                 JSONObject movieData = resultsArray.getJSONObject(i);
 
                 // Extract parameter values
+                String movieId = movieData.getString("id");
                 String posterPath = movieData.getString("poster_path");
                 String title = movieData.getString("original_title");
                 String overview = movieData.getString("overview");
@@ -151,7 +152,7 @@ public final class QueryUtils {
 
                 // popularmovies.add(new PopularMovie(posterPath, title, overview, voteAverage,
                 // releaseDate)
-                PopularMovie popularMovie = new PopularMovie(posterPath, title, overview,
+                PopularMovie popularMovie = new PopularMovie(movieId, posterPath, title, overview,
                         voteAverage, releaseDate);
                 /**
                  * Add the new {@link PopularMovie} object to the list of popularMovies
