@@ -1,16 +1,17 @@
 package me.anky.popularmovies;
 
-import android.content.Intent;
-import android.support.v4.app.Fragment;
 import android.app.LoaderManager;
+import android.content.Intent;
 import android.content.Loader;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -27,11 +28,13 @@ public class TrailerFragment extends Fragment implements
 
     private TextView mEmptyTrailerListTextView;
 
+    private static final String YOUTUBE_REQUEST_URL = "https://youtu.be/";
+
     private static final int TRAILER_LOADER_ID = 1;
 
     private MovieTrailerAdapter movieTrailerAdapter;
 
-        private String mMovieId;
+    private String mMovieId;
 
     public TrailerFragment() {
         // Required empty public constructor
@@ -55,6 +58,14 @@ public class TrailerFragment extends Fragment implements
         super.onSaveInstanceState(outState);
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+
+        // Restart the Loader onResume
+        getActivity().getLoaderManager().restartLoader(TRAILER_LOADER_ID, null, this);
+    }
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -67,6 +78,22 @@ public class TrailerFragment extends Fragment implements
         mEmptyTrailerListTextView = (TextView) rootView.findViewById(R.id.empty_trailer_list);
         listView.setEmptyView(mEmptyTrailerListTextView);
         listView.setAdapter(movieTrailerAdapter);
+
+        // Open Youtube or a website to show the Trailer
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                MovieTrailer movieTrailer = movieTrailerAdapter.getItem(i);
+
+                String trailerKey = movieTrailer.getTrailerKey();
+
+                Uri youtubeUri = Uri.parse(YOUTUBE_REQUEST_URL + trailerKey);
+
+                Intent youtubeIntent = new Intent(Intent.ACTION_VIEW, youtubeUri);
+                startActivity(youtubeIntent);
+            }
+        });
+
         return rootView;
     }
 
@@ -74,7 +101,7 @@ public class TrailerFragment extends Fragment implements
     public Loader<List<MovieTrailer>> onCreateLoader(int i, Bundle bundle) {
         // Read Movie ID from the Intent
         Intent intent = getActivity().getIntent();
-        if(intent != null && intent.hasExtra("movieData")){
+        if (intent != null && intent.hasExtra("movieData")) {
             PopularMovie movieData = intent.getParcelableExtra("movieData");
             mMovieId = movieData.getMovieId();
         }
@@ -90,7 +117,7 @@ public class TrailerFragment extends Fragment implements
 
     @Override
     public void onLoadFinished(Loader<List<MovieTrailer>> loader, List<MovieTrailer> movieTrailers) {
-        Log.v(LOG_TAG, "Testing: Load finished");
+        movieTrailerAdapter.clear();
 
         mEmptyTrailerListTextView.setText(R.string.no_trailers_found);
 
