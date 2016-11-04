@@ -12,7 +12,6 @@ import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -37,7 +36,7 @@ public class MovieActivityFragment extends Fragment implements
 
     private PopularMovieAdapter popularMovieAdapter;
 
-    private static final String MOVIE_REQUEST_URL =
+    public static final String MOVIE_REQUEST_URL =
             "http://api.themoviedb.org/3/movie/";
 
     private ArrayList<PopularMovie> movieList;
@@ -53,7 +52,7 @@ public class MovieActivityFragment extends Fragment implements
         super.onResume();
 
         // Restart the Loader onResume
-            getActivity().getLoaderManager().restartLoader(MOVIE_LOADER_ID, null, this);
+        getActivity().getLoaderManager().restartLoader(MOVIE_LOADER_ID, null, this);
     }
 
     @Override
@@ -71,13 +70,13 @@ public class MovieActivityFragment extends Fragment implements
 
 
 //            // Get a ref to the LoaderManager, in order to interact with loaders
-            LoaderManager loaderManager = getActivity().getLoaderManager();
+        LoaderManager loaderManager = getActivity().getLoaderManager();
 
-            /**
-             * Initialise the loader. pass in the int ID constant defined above and pass in null for
-             * the bundle. Pass in this activity for the LoaderCallbacks parameter
-             */
-            loaderManager.initLoader(MOVIE_LOADER_ID, null, this);
+        /**
+         * Initialise the loader. pass in the int ID constant defined above and pass in null for
+         * the bundle. Pass in this activity for the LoaderCallbacks parameter
+         */
+        loaderManager.initLoader(MOVIE_LOADER_ID, null, this);
     }
 
     @Override
@@ -107,7 +106,7 @@ public class MovieActivityFragment extends Fragment implements
         // Inflate the layout for this fragment
         View rootView = inflater.inflate(R.layout.movie_activity_fragment, container, false);
 
-        mProgressBar = (ProgressBar)rootView.findViewById(R.id.progress_bar);
+        mProgressBar = (ProgressBar) rootView.findViewById(R.id.progress_bar);
         // Create a new {@link ArrayAdapter} of movies
         popularMovieAdapter = new PopularMovieAdapter(getActivity(),
                 new ArrayList<PopularMovie>());
@@ -132,7 +131,6 @@ public class MovieActivityFragment extends Fragment implements
 
     @Override
     public Loader<List<PopularMovie>> onCreateLoader(int i, Bundle bundle) {
-        Log.v(LOG_TAG, "Testing: Load started");
         SharedPreferences sharedPreferences =
                 PreferenceManager.getDefaultSharedPreferences(getContext());
         String sortBy = sharedPreferences.getString(
@@ -165,7 +163,7 @@ public class MovieActivityFragment extends Fragment implements
             mProgressBar.setVisibility(View.GONE);
             // Update empty state with no connection error message
             mEmptyStateTextView.setText(R.string.no_internet);
-        }else {
+        } else {
             // Set empty state text to display "NO movies found" message
             mEmptyStateTextView.setText(R.string.no_movies_found);
         }

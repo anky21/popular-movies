@@ -19,7 +19,7 @@ android {
     }
 
     buildTypes.each {
-        // Use your own API KEY
+        // Use your own API_KEY
         it.buildConfigField 'String', 'OPEN_MOVIE_API_KEY', "\"API_KEY\""
     }
 }

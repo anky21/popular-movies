@@ -20,6 +20,8 @@ import java.text.DecimalFormat;
  */
 
 public class DetailFragment extends Fragment {
+    private static final String LOG_TAG = DetailFragment.class.getSimpleName();
+
     public DetailFragment() {
     }
 

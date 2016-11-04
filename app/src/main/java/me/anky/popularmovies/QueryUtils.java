@@ -59,7 +59,7 @@ public final class QueryUtils {
     }
 
     // Return new URL object from the given URL string
-    private static URL createUrl(String stringUrl) {
+    public static URL createUrl(String stringUrl) {
         URL url = null;
         try {
             url = new URL(stringUrl);
@@ -70,7 +70,7 @@ public final class QueryUtils {
     }
 
     // Make an HTTP request and return a String as the response
-    private static String makeHttpRequest(URL url) throws IOException {
+    public static String makeHttpRequest(URL url) throws IOException {
         String jsonResponse = "";
         if (url == null) {
             return jsonResponse;
@@ -105,7 +105,7 @@ public final class QueryUtils {
     /**
      * Convert the {@link InputStream} into a String containing the whole Json response
      */
-    private static String readFromStream(InputStream inputStream) throws IOException {
+    public static String readFromStream(InputStream inputStream) throws IOException {
         StringBuilder output = new StringBuilder();
         if (inputStream != null) {
             InputStreamReader inputStreamReader =
