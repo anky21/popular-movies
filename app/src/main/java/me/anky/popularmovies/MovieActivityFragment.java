@@ -37,9 +37,6 @@ public class MovieActivityFragment extends Fragment implements
 
     private PopularMovieAdapter popularMovieAdapter;
 
-    //Need an API key to request data from the Movie DB: USE_YOUR_OWN_API_KEY
-    private static final String API_KEY = "USE_YOUR_OWN_API_KEY";
-
     private static final String MOVIE_REQUEST_URL =
             "http://api.themoviedb.org/3/movie/";
 
@@ -147,7 +144,7 @@ public class MovieActivityFragment extends Fragment implements
         Uri.Builder uriBuilder = baseUri.buildUpon();
 
         uriBuilder.appendPath(sortBy)
-                .appendQueryParameter("api_key", API_KEY);
+                .appendQueryParameter("api_key", BuildConfig.OPEN_MOVIE_API_KEY);
 
         // Create a new loader for the given URL
         return new MovieLoader(getContext(), uriBuilder.toString());
