@@ -42,12 +42,11 @@ public final class TrailerQueryUtils {
         List<MovieTrailer> movieTrailers = new ArrayList<>();
 
         if (TextUtils.isEmpty(trailerJson)) {
-            Log.v(LOG_TAG, "Testing: empty Json");
+            Log.v(LOG_TAG, "empty Json");
             return null;
         }
 
         try {
-            Log.v(LOG_TAG, "Testing: extracting");
             JSONObject baseJsonResponse = new JSONObject(trailerJson);
             JSONArray resultArray = baseJsonResponse.optJSONArray("results");
 
@@ -59,8 +58,6 @@ public final class TrailerQueryUtils {
                     String key = trailerData.getString("key");
                     trailerNumber += 1;
                     MovieTrailer movieTrailer = new MovieTrailer(key, "Trailer " + trailerNumber);
-                    Log.v(LOG_TAG, "Testing " + key + "Trailer " + trailerNumber);
-
                     movieTrailers.add(movieTrailer);
                 }
             }

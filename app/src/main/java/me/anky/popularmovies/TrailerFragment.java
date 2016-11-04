@@ -68,16 +68,12 @@ public class TrailerFragment extends Fragment implements
 
     @Override
     public Loader<List<MovieTrailer>> onCreateLoader(int i, Bundle bundle) {
-        Log.v(LOG_TAG, "Testing: Load started");
-
         Uri baseUri = Uri.parse(MovieActivityFragment.MOVIE_REQUEST_URL);
         Uri.Builder uriBuilder = baseUri.buildUpon();
 
         uriBuilder.appendPath(movieId)
                 .appendPath("videos")
                 .appendQueryParameter("api_key", BuildConfig.OPEN_MOVIE_API_KEY);
-        Log.v(LOG_TAG, "Testing: " + uriBuilder.toString());
-
         return new TrailerLoader(getContext(), uriBuilder.toString());
     }
 
