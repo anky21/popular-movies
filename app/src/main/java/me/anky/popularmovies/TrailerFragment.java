@@ -1,5 +1,6 @@
 package me.anky.popularmovies;
 
+import android.content.Intent;
 import android.support.v4.app.Fragment;
 import android.app.LoaderManager;
 import android.content.Loader;
@@ -11,6 +12,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -23,12 +25,13 @@ public class TrailerFragment extends Fragment implements
         LoaderManager.LoaderCallbacks<List<MovieTrailer>> {
     private static final String LOG_TAG = TrailerFragment.class.getSimpleName();
 
+    private TextView mEmptyTrailerListTextView;
+
     private static final int TRAILER_LOADER_ID = 1;
 
     private MovieTrailerAdapter movieTrailerAdapter;
 
-    // Movie ID for testing purpose
-    private String movieId = "284052";
+        private String mMovieId;
 
     public TrailerFragment() {
         // Required empty public constructor
@@ -61,17 +64,25 @@ public class TrailerFragment extends Fragment implements
                 new ArrayList<MovieTrailer>());
 
         ListView listView = (ListView) rootView.findViewById(R.id.trailer_list);
-
+        mEmptyTrailerListTextView = (TextView) rootView.findViewById(R.id.empty_trailer_list);
+        listView.setEmptyView(mEmptyTrailerListTextView);
         listView.setAdapter(movieTrailerAdapter);
         return rootView;
     }
 
     @Override
     public Loader<List<MovieTrailer>> onCreateLoader(int i, Bundle bundle) {
+        // Read Movie ID from the Intent
+        Intent intent = getActivity().getIntent();
+        if(intent != null && intent.hasExtra("movieData")){
+            PopularMovie movieData = intent.getParcelableExtra("movieData");
+            mMovieId = movieData.getMovieId();
+        }
+
         Uri baseUri = Uri.parse(MovieActivityFragment.MOVIE_REQUEST_URL);
         Uri.Builder uriBuilder = baseUri.buildUpon();
 
-        uriBuilder.appendPath(movieId)
+        uriBuilder.appendPath(mMovieId)
                 .appendPath("videos")
                 .appendQueryParameter("api_key", BuildConfig.OPEN_MOVIE_API_KEY);
         return new TrailerLoader(getContext(), uriBuilder.toString());
@@ -80,6 +91,9 @@ public class TrailerFragment extends Fragment implements
     @Override
     public void onLoadFinished(Loader<List<MovieTrailer>> loader, List<MovieTrailer> movieTrailers) {
         Log.v(LOG_TAG, "Testing: Load finished");
+
+        mEmptyTrailerListTextView.setText(R.string.no_trailers_found);
+
         if (movieTrailers != null && !movieTrailers.isEmpty()) {
             movieTrailerAdapter.addAll(movieTrailers);
         }

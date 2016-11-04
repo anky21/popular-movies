@@ -13,13 +13,20 @@
             android:name="me.anky.popularmovies.DetailFragment"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="0"/>
+            android:layout_weight="0" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Trailers:"
+            android:padding="@dimen/Medium_padding"
+            android:textAppearance="?android:textAppearanceLarge"/>
 
         <fragment
             android:id="@+id/fragment_trailer"
             android:name="me.anky.popularmovies.TrailerFragment"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1"/>
+            android:layout_weight="1" />
     </LinearLayout>
 </ScrollView>
