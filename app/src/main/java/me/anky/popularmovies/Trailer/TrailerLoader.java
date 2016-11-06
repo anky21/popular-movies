@@ -1,8 +1,7 @@
-package me.anky.popularmovies;
+package me.anky.popularmovies.Trailer;
 
 import android.content.AsyncTaskLoader;
 import android.content.Context;
-import android.util.Log;
 
 import java.util.List;
 
@@ -27,7 +26,6 @@ public class TrailerLoader extends AsyncTaskLoader<List<MovieTrailer>> {
 
     @Override
     public List<MovieTrailer> loadInBackground() {
-        Log.v(LOG_TAG, "Testing: load in background");
         if(mUrl == null){
             return null;
         }

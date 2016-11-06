@@ -25,5 +25,10 @@
     <string name="settings_order_by_rating_label">Top rated</string>
     <string name="settings_order_by_rating_value" translatable="false">top_rated</string>
     <string name="no_trailers_found">There are no trailers available!</string>
+    <string name="reviews">Reviews</string>
+    <string name="no_reviews">There are no reviews yet!</string>
+    <string name="no_reviews_found">There are no reviews yet!</string>
+    <string name="review_section">Reviews:</string>
+    <string name="trailer_section">Trailers:</string>
 
 </resources>

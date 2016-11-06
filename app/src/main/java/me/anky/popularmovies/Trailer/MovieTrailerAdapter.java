@@ -1,4 +1,4 @@
-package me.anky.popularmovies;
+package me.anky.popularmovies.Trailer;
 
 import android.content.Context;
 import android.support.annotation.NonNull;
@@ -9,6 +9,8 @@ import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
 import java.util.List;
+
+import me.anky.popularmovies.R;
 
 /**
  * Created by anky_ on 4/11/2016.

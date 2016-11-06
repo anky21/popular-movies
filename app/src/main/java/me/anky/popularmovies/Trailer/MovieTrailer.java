@@ -1,4 +1,4 @@
-package me.anky.popularmovies;
+package me.anky.popularmovies.Trailer;
 
 /**
  * Created by anky_ on 4/11/2016.

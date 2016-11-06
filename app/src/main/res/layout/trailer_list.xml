@@ -6,7 +6,7 @@
     android:gravity="left"
     android:minHeight="?android:attr/listPreferredItemHeight"
     android:orientation="horizontal"
-    tools:context="me.anky.popularmovies.MovieTrailerAdapter">
+    tools:context="me.anky.popularmovies.Trailer.MovieTrailerAdapter">
 
     <ImageView
         android:layout_width="0dp"

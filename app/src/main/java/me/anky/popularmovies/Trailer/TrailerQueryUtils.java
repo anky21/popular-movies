@@ -1,4 +1,4 @@
-package me.anky.popularmovies;
+package me.anky.popularmovies.Trailer;
 
 import android.text.TextUtils;
 import android.util.Log;
@@ -11,6 +11,8 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
+
+import me.anky.popularmovies.QueryUtils;
 
 /**
  * Created by anky_ on 4/11/2016.

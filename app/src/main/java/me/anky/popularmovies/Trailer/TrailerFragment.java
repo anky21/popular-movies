@@ -1,4 +1,4 @@
-package me.anky.popularmovies;
+package me.anky.popularmovies.Trailer;
 
 import android.app.LoaderManager;
 import android.content.Intent;
@@ -7,7 +7,6 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,6 +16,11 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import me.anky.popularmovies.BuildConfig;
+import me.anky.popularmovies.MovieActivityFragment;
+import me.anky.popularmovies.PopularMovie;
+import me.anky.popularmovies.R;
 
 /**
  * Created by anky_ on 4/11/2016.
@@ -56,14 +60,6 @@ public class TrailerFragment extends Fragment implements
     @Override
     public void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
-    }
-
-    @Override
-    public void onResume() {
-        super.onResume();
-
-        // Restart the Loader onResume
-        getActivity().getLoaderManager().restartLoader(TRAILER_LOADER_ID, null, this);
     }
 
     @Nullable
