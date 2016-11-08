@@ -1,68 +1,74 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/activity_detailed"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical">
-
-    <TextView
-        android:id="@+id/tv_title"
-        style="@style/TextViewBasic.Title"
-        tools:text="Testing" />
+    android:layout_height="match_parent">
 
     <LinearLayout
+        android:id="@+id/activity_detailed"
+        android:layout_height="match_parent"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:padding="@dimen/small_padding">
+        android:orientation="vertical">
 
-        <ImageView
-            android:id="@+id/iv_movie_thumb"
-            style="@style/ThumbImageView"
-            android:layout_below="@id/tv_title" />
+        <TextView
+            style="@style/TextViewBasic.Title"
+            android:id="@+id/tv_title"
+            tools:text="Testing" />
 
         <LinearLayout
-            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:orientation="vertical"
-            android:paddingLeft="@dimen/Medium_padding">
+            android:layout_width="match_parent"
+            android:orientation="horizontal"
+            android:padding="@dimen/small_padding">
 
-            <TextView
-                android:id="@+id/tv_release_date"
-                style="@style/TextViewBasic.Large"
-                tools:text="2016" />
-
-            <TextView
-                android:id="@+id/tv_rating"
-                style="@style/TextViewBasic"
-                tools:text="8.1/10" />
+            <ImageView
+                style="@style/ThumbImageView"
+                android:id="@+id/iv_movie_thumb"
+                android:layout_below="@id/tv_title" />
 
             <LinearLayout
-                android:id="@+id/favourite_view"
-                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal">
-
-                <ImageView
-                    android:id="@+id/favorite_icon"
-                    android:layout_width="24dp"
-                    android:layout_height="24dp" />
+                android:layout_weight="1"
+                android:layout_width="0dp"
+                android:orientation="vertical"
+                android:paddingLeft="@dimen/Medium_padding">
 
                 <TextView
-                    android:id="@+id/favourite_text_view"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
+                    style="@style/TextViewBasic.Large"
+                    android:id="@+id/tv_release_date"
+                    tools:text="2016" />
+
+                <TextView
+                    style="@style/TextViewBasic"
+                    android:id="@+id/tv_rating"
+                    tools:text="8.1/10" />
+
+                <LinearLayout
+                    android:id="@+id/favourite_view"
+                    android:layout_height="wrap_content"
+                    android:layout_width="match_parent"
+                    android:orientation="horizontal">
+
+                    <ImageView
+                        android:id="@+id/favorite_icon"
+                        android:layout_height="24dp"
+                        android:layout_width="24dp" />
+
+                    <TextView
+                        android:id="@+id/favourite_text_view"
+                        android:layout_height="wrap_content"
+                        android:layout_width="wrap_content" />
+                </LinearLayout>
+
             </LinearLayout>
-
         </LinearLayout>
-    </LinearLayout>
 
-    <TextView
-        android:id="@+id/tv_overview"
-        style="@style/TextViewBasic"
-        android:paddingLeft="@dimen/small_padding"
-        android:paddingRight="@dimen/small_padding"
-        tools:text="I just love coding." />
-</LinearLayout>
+        <TextView
+            style="@style/TextViewBasic"
+            android:id="@+id/tv_overview"
+            android:paddingLeft="@dimen/small_padding"
+            android:paddingRight="@dimen/small_padding"
+            tools:text="I just love coding." />
+
+    </LinearLayout>
+</ScrollView>

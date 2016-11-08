@@ -7,7 +7,7 @@
     android:layout_gravity="center"
     android:orientation="vertical">
 
-    <me.anky.popularmovies.NonScrollableListView
+    <ListView
         android:id="@+id/review_list"
         android:layout_width="match_parent"
         android:layout_height="match_parent"

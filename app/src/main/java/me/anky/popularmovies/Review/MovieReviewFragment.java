@@ -59,7 +59,7 @@ public class MovieReviewFragment extends Fragment implements
         View rootView = inflater.inflate(R.layout.review_fragment, container, false);
 
         ListView listView = (ListView) rootView.findViewById(R.id.review_list);
-        mEmptyReviewListTextView = (TextView)rootView.findViewById(R.id.empty_review_textview);
+        mEmptyReviewListTextView = (TextView) rootView.findViewById(R.id.empty_review_textview);
         movieReviewAdapter = new MovieReviewAdapter(getActivity(),
                 new ArrayList<MovieReview>());
 
@@ -101,5 +101,13 @@ public class MovieReviewFragment extends Fragment implements
     @Override
     public void onLoaderReset(Loader<List<MovieReview>> loader) {
         movieReviewAdapter.clear();
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+
+        LoaderManager loaderManager = getActivity().getLoaderManager();
+        loaderManager.restartLoader(REVIEW_LOADER_ID, null, this);
     }
 }

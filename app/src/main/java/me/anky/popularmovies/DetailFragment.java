@@ -1,6 +1,6 @@
 package me.anky.popularmovies;
 
-import android.app.Fragment;
+import android.support.v4.app.Fragment;
 import android.content.ContentResolver;
 import android.content.ContentValues;
 import android.content.Intent;
@@ -8,6 +8,7 @@ import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -157,5 +158,47 @@ public class DetailFragment extends Fragment {
         } else {
             return false;
         }
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        Log.i(LOG_TAG, "DestFragment onStart");
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        Log.i(LOG_TAG, "DestFragment onResume");
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        Log.i(LOG_TAG, "DestFragment onPause");
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        Log.i(LOG_TAG, "DestFragment onStop");
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        Log.i(LOG_TAG, "DestFragment onDestroyView");
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        Log.i(LOG_TAG, "DestFragment onDestroy");
+    }
+
+    @Override
+    public void onDetach() {
+        super.onDetach();
+        Log.i(LOG_TAG, "DestFragment onDetach");
     }
 }
