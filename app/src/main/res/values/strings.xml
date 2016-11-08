@@ -30,5 +30,7 @@
     <string name="no_reviews_found">There are no reviews yet!</string>
     <string name="review_section">Reviews:</string>
     <string name="trailer_section">Trailers:</string>
+    <string name="favourited">Favourite</string>
+    <string name="mark_as_favourite">Mark As Favourite</string>
 
 </resources>
