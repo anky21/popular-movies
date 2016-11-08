@@ -148,7 +148,7 @@ public final class QueryUtils {
                 String title = movieData.getString("original_title");
                 String overview = movieData.getString("overview");
                 double voteAverage = movieData.getDouble("vote_average");
-                String releaseDate = movieData.getString("release_date");
+                String releaseDate = movieData.getString("release_date").substring(0,4);
 
                 // popularmovies.add(new PopularMovie(posterPath, title, overview, voteAverage,
                 // releaseDate)
@@ -174,5 +174,4 @@ public final class QueryUtils {
         String myUrl = builtUri.toString();
         return myUrl;
     }
-
 }

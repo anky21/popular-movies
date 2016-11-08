@@ -4,7 +4,7 @@
     <dimen name="activity_vertical_margin">16dp</dimen>
 
     <!-- Movie title text size -->
-    <dimen name="movie_title_text_size">30sp</dimen>
+    <dimen name="movie_title_text_size">24sp</dimen>
 
     <!-- Padding -->
     <dimen name="small_padding">12dp</dimen>

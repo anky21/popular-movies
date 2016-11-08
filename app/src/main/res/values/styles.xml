@@ -6,6 +6,12 @@
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
+        <item name="actionBarStyle">@style/NoActionBarShadowTheme</item>
+        <item name="android:windowContentOverlay">@null</item>
+    </style>
+
+    <style name="NoActionBarShadowTheme" parent="style/Widget.AppCompat.Light.ActionBar.Solid.Inverse">
+        <item name="elevation">0dp</item>
     </style>
 
     <!-- Basic TextView style -->
@@ -23,11 +29,12 @@
     <!-- Movie Title TextView style -->
     <style name="TextViewBasic.Title">
         <item name="android:layout_width">match_parent</item>
-        <item name="android:background">@color/colorPrimaryDark</item>
+        <item name="android:background">@color/colorPrimary</item>
         <item name="android:gravity">center</item>
         <item name="android:textSize">@dimen/movie_title_text_size</item>
         <item name="android:paddingTop">@dimen/small_padding</item>
         <item name="android:paddingBottom">@dimen/small_padding</item>
+        <item name="android:textColor">@android:color/white</item>
     </style>
 
     <!-- ImageView-->
@@ -37,4 +44,16 @@
         <item name="android:scaleType">centerCrop</item>
     </style>
 
+    <!-- Style for a tab that displays a fragment in the DetailedActivity -->
+    <style name="FragmentTab" parent="Widget.Design.TabLayout">
+        <item name="tabIndicatorColor">@android:color/white</item>
+        <item name="tabSelectedTextColor">@android:color/white</item>
+        <item name="tabTextAppearance">@style/FragmentTabTextAppearance</item>
+        <item name="tabBackground">@color/colorPrimary</item>
+    </style>
+
+    <!-- Text appearance style for a category tab -->
+    <style name="FragmentTabTextAppearance" parent="TextAppearance.Design.Tab">
+        <item name="android:textColor">#A8A19E</item>
+    </style>
 </resources>

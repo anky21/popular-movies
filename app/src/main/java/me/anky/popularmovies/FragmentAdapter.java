@@ -1,5 +1,6 @@
 package me.anky.popularmovies;
 
+import android.content.Context;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
@@ -12,9 +13,11 @@ import me.anky.popularmovies.Trailer.TrailerFragment;
  */
 
 public class FragmentAdapter extends FragmentPagerAdapter {
+    private Context mContext;
 
-    public FragmentAdapter(FragmentManager fm) {
+    public FragmentAdapter(Context context, FragmentManager fm) {
         super(fm);
+        mContext = context;
     }
 
     @Override
@@ -31,5 +34,16 @@ public class FragmentAdapter extends FragmentPagerAdapter {
     @Override
     public int getCount() {
         return 3;
+    }
+
+    @Override
+    public CharSequence getPageTitle(int position) {
+        if (position == 0) {
+            return mContext.getString(R.string.page_detail_title);
+        } else if (position == 1) {
+            return mContext.getString(R.string.page_trailer_title);
+        } else {
+            return mContext.getString(R.string.page_review_title);
+        }
     }
 }
