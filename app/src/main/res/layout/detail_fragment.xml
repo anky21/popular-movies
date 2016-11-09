@@ -13,7 +13,8 @@
         <TextView
             style="@style/TextViewBasic.Title"
             android:id="@+id/tv_title"
-            tools:text="Testing" />
+            tools:text="Testing"
+            android:textIsSelectable="true"/>
 
         <LinearLayout
             android:layout_height="wrap_content"
@@ -72,7 +73,8 @@
             android:id="@+id/tv_overview"
             android:paddingLeft="@dimen/small_padding"
             android:paddingRight="@dimen/small_padding"
-            tools:text="I just love coding." />
+            tools:text="I just love coding."
+            android:textIsSelectable="true"/>
 
     </LinearLayout>
 </ScrollView>

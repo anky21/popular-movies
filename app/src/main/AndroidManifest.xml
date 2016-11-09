@@ -18,24 +18,32 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".DetailedActivity"
+        <activity
+            android:name=".DetailedActivity"
             android:label="@string/detailed_title">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value=".MovieActivity"/>
+                android:value=".MovieActivity" />
         </activity>
-        <activity android:name=".SettingsActivity"
+        <activity
+            android:name=".SettingsActivity"
             android:label="@string/settings_title">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value=".MovieActivity"
-                />
+                android:value=".MovieActivity" />
         </activity>
-        <provider
-            android:authorities="me.anky.popularmovies"
-            android:name=".data.MovieProvider"
-            android:exported="false"/>
 
+        <provider
+            android:name=".data.MovieProvider"
+            android:authorities="me.anky.popularmovies"
+            android:exported="false" />
+
+        <activity android:name=".FavouriteActivity"
+            android:label="@string/favourite_movies_activity_title">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".MovieActivity" />
+        </activity>
     </application>
 
 </manifest>

@@ -37,5 +37,7 @@
     <string name="page_detail_title">Details</string>
     <string name="page_trailer_title">Trailers</string>
     <string name="page_review_title">Reviews</string>
+    <string name="favourite_movies_activity_title">Favourite Movies</string>
+    <string name="empty_favourite_gridview_message">Add some of your favourite movies here.</string>
 
 </resources>
