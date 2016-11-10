@@ -1,9 +1,11 @@
-package me.anky.popularmovies;
+package me.anky.popularmovies.favourite;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.widget.GridView;
 import android.widget.TextView;
+
+import me.anky.popularmovies.R;
 
 public class FavouriteActivity extends AppCompatActivity {
     // Identifier for the Loader

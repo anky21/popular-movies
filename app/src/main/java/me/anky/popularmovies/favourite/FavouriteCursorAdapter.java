@@ -1,4 +1,4 @@
-package me.anky.popularmovies;
+package me.anky.popularmovies.favourite;
 
 
 import android.content.Context;
@@ -12,6 +12,9 @@ import android.widget.ImageView;
 import com.squareup.picasso.Picasso;
 
 import java.net.MalformedURLException;
+
+import me.anky.popularmovies.QueryUtils;
+import me.anky.popularmovies.R;
 
 import static me.anky.popularmovies.data.MovieContract.MovieEntry;
 

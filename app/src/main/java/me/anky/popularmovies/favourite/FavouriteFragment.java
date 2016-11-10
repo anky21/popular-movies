@@ -1,7 +1,8 @@
-package me.anky.popularmovies;
+package me.anky.popularmovies.favourite;
 
 import android.app.LoaderManager;
 import android.content.CursorLoader;
+import android.content.Intent;
 import android.content.Loader;
 import android.database.Cursor;
 import android.os.Bundle;
@@ -10,10 +11,12 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.GridView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import me.anky.popularmovies.R;
 import me.anky.popularmovies.data.MovieContract;
 
 /**
@@ -52,6 +55,21 @@ public class FavouriteFragment extends Fragment implements
 
         favouriteGridView.setAdapter(mCursorAdapter);
         favouriteGridView.setEmptyView(mEmptyStateTextView);
+
+        // Click on a movie to show its details
+        favouriteGridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                Cursor cursor = (Cursor) adapterView.getItemAtPosition(i);
+                if (cursor != null) {
+                    String movieId = cursor.
+                            getString(cursor.getColumnIndex(MovieContract.MovieEntry.COLUMN_MOVIE_ID));
+                    Intent intent = new Intent(getActivity(), FavouriteDetailActivity.class);
+                    intent.putExtra(Intent.EXTRA_TEXT, movieId);
+                    startActivity(intent);
+                }
+            }
+        });
 
         return rootView;
     }

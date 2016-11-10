@@ -90,7 +90,7 @@ public class DetailFragment extends Fragment {
             mFavouriteTextView = (TextView) rootView.findViewById(R.id.favourite_text_view);
 
             // Set favourite image and text after figuring out whether the movie is favourited
-            setFavouriteImageText(isFavourited(movieId));
+            setFavouriteImageText(isFavourited(movieId), mFavouriteIcon, mFavouriteTextView);
 
             favouriteView.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -108,7 +108,7 @@ public class DetailFragment extends Fragment {
                         );
 
                         // Update favourite icon and text
-                        setFavouriteImageText(false);
+                        setFavouriteImageText(false, mFavouriteIcon, mFavouriteTextView);
                     } else {
                         // Add as favourite and insert it into the database
                         ContentValues values = new ContentValues();
@@ -122,7 +122,7 @@ public class DetailFragment extends Fragment {
                         Uri newUri = mContentResolver.insert(MovieEntry.CONTENT_URI, values);
 
                         // Update favourite icon and text
-                        setFavouriteImageText(true);
+                        setFavouriteImageText(true, mFavouriteIcon, mFavouriteTextView);
                     }
                 }
             });
@@ -130,13 +130,13 @@ public class DetailFragment extends Fragment {
         return rootView;
     }
 
-    public void setFavouriteImageText(boolean favourite) {
+    public static  void setFavouriteImageText(boolean favourite, ImageView imageView, TextView textView) {
         if (favourite) {
-            mFavouriteIcon.setImageResource(R.drawable.ic_favorite_24dp);
-            mFavouriteTextView.setText(R.string.favourited);
+            imageView.setImageResource(R.drawable.ic_favorite_24dp);
+            textView.setText(R.string.favourited);
         } else {
-            mFavouriteIcon.setImageResource(R.drawable.ic_favorite_border_black_24dp);
-            mFavouriteTextView.setText(R.string.mark_as_favourite);
+            imageView.setImageResource(R.drawable.ic_favorite_border_black_24dp);
+            textView.setText(R.string.mark_as_favourite);
         }
     }
 

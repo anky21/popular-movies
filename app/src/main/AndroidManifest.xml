@@ -38,11 +38,18 @@
             android:authorities="me.anky.popularmovies"
             android:exported="false" />
 
-        <activity android:name=".FavouriteActivity"
+        <activity
+            android:name=".favourite.FavouriteActivity"
             android:label="@string/favourite_movies_activity_title">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".MovieActivity" />
+        </activity>
+        <activity android:name=".favourite.FavouriteDetailActivity"
+            android:label="@string/detailed_title">>
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".favourite.FavouriteActivity" />
         </activity>
     </application>
 
