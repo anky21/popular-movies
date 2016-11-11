@@ -7,7 +7,13 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.view.MenuItemCompat;
+import android.support.v7.widget.ShareActionProvider;
+import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -40,14 +46,40 @@ public class TrailerFragment extends Fragment implements
 
     private String mMovieId;
 
+    private String mTrailer1;
+    private String mMovieTitle;
+
     public TrailerFragment() {
-        // Required empty public constructor
+        setHasOptionsMenu(true);
+    }
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        inflater.inflate(R.menu.share_action, menu);
+
+        MenuItem menuItem = menu.findItem(R.id.action_share);
+
+        ShareActionProvider mShareActionProvider = (ShareActionProvider) MenuItemCompat.getActionProvider(menuItem);
+
+        if (mShareActionProvider != null) {
+            mShareActionProvider.setShareIntent(createShareIntent());
+        } else {
+            Log.d(LOG_TAG, "Share Action Provider is null");
+        }
+    }
+
+    private Intent createShareIntent(){
+        String shareMessage = "Check this movie out: " + mMovieTitle + ", and the Trailer: " + mTrailer1;
+        Intent intent = new Intent(Intent.ACTION_SEND);
+        intent.setType("text/plain");
+        intent.putExtra(Intent.EXTRA_TEXT, shareMessage);
+        return intent;
     }
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        //            // Get a ref to the LoaderManager, in order to interact with loaders
+        // Get a ref to the LoaderManager, in order to interact with loaders
         LoaderManager loaderManager = getActivity().getLoaderManager();
 
         /**
@@ -100,6 +132,7 @@ public class TrailerFragment extends Fragment implements
         if (intent != null && intent.hasExtra("movieData")) {
             PopularMovie movieData = intent.getParcelableExtra("movieData");
             mMovieId = movieData.getMovieId();
+            mMovieTitle = movieData.getOriginalTitle();
         }
 
         Uri baseUri = Uri.parse(MovieActivityFragment.MOVIE_REQUEST_URL);
@@ -119,6 +152,7 @@ public class TrailerFragment extends Fragment implements
 
         if (movieTrailers != null && !movieTrailers.isEmpty()) {
             movieTrailerAdapter.addAll(movieTrailers);
+            mTrailer1 = YOUTUBE_REQUEST_URL + movieTrailerAdapter.getItem(0).getTrailerKey();
         }
     }
 
