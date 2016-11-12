@@ -1,29 +1,12 @@
 <resources>
     <string name="app_name">Popular Movies</string>
 
+    <!-- Detailed Activity Title-->
+    <string name="detailed_title">About this movie</string>
+
     <string name="no_movies_found">Sorry. No movies found</string>
     <string name="no_internet">Please check your network connectivity</string>
 
-    <!-- Settings Menu Item-->
-    <string name="settings_menu_item">Settings</string>
-    <!-- Detailed Activity Title-->
-    <string name="detailed_title">About this movie</string>
-    <!-- Settings Activity Title-->
-    <string name="settings_title">Movie Settings</string>
-
-    <!-- Strings for order-by preference -->
-    <string name="settings_order_by_label">Order by</string>
-    <string name="settings_order_by_key" translatable="false">order_by</string>
-    <string name="settings_order_by_default" translatable="false">
-        @string/settings_order_by_popularity_value</string>
-
-    <!-- Label for order-by Popularity option -->
-    <string name="settings_order_by_popularity_label">Popularity</string>
-    <string name="settings_order_by_popularity_value" translatable="false">popular</string>
-
-    <!-- Label for order-by Rating option-->
-    <string name="settings_order_by_rating_label">Top rated</string>
-    <string name="settings_order_by_rating_value" translatable="false">top_rated</string>
     <string name="no_trailers_found">There are no trailers available!</string>
     <string name="reviews">Reviews</string>
     <string name="no_reviews">There are no reviews yet!</string>
@@ -33,11 +16,20 @@
     <string name="favourited">Favourite</string>
     <string name="mark_as_favourite">Mark As Favourite</string>
 
+    <!-- Sort by menu -->
+    <string name="sort_order_key">sort_order</string>
+    <string name="sort_order_popular" translatable="false">0</string>
+    <string name="sort_order_top_rated" translatable="false">1</string>
+    <string name="sortby_popular_label">Most Popular</string>
+    <string name="sortby_rating_label">Top Rated</string>
+    <string name="sortby_favourite_label">Favourites</string>
+
     <!-- Page titles in the Detail Activity -->
     <string name="page_detail_title">Details</string>
     <string name="page_trailer_title">Trailers</string>
     <string name="page_review_title">Reviews</string>
     <string name="favourite_movies_activity_title">Favourite Movies</string>
-    <string name="empty_favourite_gridview_message">Add some of your favourite movies here.</string>
+    <string name="empty_favourite_gridview_message">Add some of your favourite movies here.
+    </string>
 
 </resources>

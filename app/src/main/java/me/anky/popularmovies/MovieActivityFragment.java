@@ -26,6 +26,8 @@ import android.widget.TextView;
 import java.util.ArrayList;
 import java.util.List;
 
+import me.anky.popularmovies.favourite.FavouriteActivity;
+
 /**
  * A fragment containing the grid view of movie posters
  */
@@ -43,6 +45,9 @@ public class MovieActivityFragment extends Fragment implements
     private TextView mEmptyStateTextView;
     private ProgressBar mProgressBar;
 
+    private String mSortBy;
+    SharedPreferences sharedPreferences;
+
     public MovieActivityFragment() {
         // Required empty public constructor
     }
@@ -50,7 +55,6 @@ public class MovieActivityFragment extends Fragment implements
     @Override
     public void onResume() {
         super.onResume();
-
         // Restart the Loader onResume
         getActivity().getLoaderManager().restartLoader(MOVIE_LOADER_ID, null, this);
     }
@@ -81,16 +85,34 @@ public class MovieActivityFragment extends Fragment implements
 
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-        inflater.inflate(R.menu.moviefragment, menu);
+        getActivity().getMenuInflater().inflate(R.menu.sortby_menu, menu);
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
-        if (id == R.id.action_settings) {
-            Intent settingsIntent = new Intent(getActivity(), SettingsActivity.class);
-            startActivity(settingsIntent);
-            return true;
+
+        sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getContext());
+        LoaderManager lm = getActivity().getLoaderManager();
+
+        switch (id) {
+            case R.id.sortby_popular: {
+                sharedPreferences.edit().putInt(getString(R.string.sort_order_key),
+                        R.string.sort_order_popular).apply();
+                lm.restartLoader(MOVIE_LOADER_ID, null, MovieActivityFragment.this);
+                break;
+            }
+            case R.id.sortby_toprated: {
+                sharedPreferences.edit().putInt(getString(R.string.sort_order_key),
+                        R.string.sort_order_top_rated).apply();
+                lm.restartLoader(MOVIE_LOADER_ID, null, MovieActivityFragment.this);
+                break;
+            }
+            case R.id.sortby_favourite: {
+                Intent intent = new Intent(getActivity(), FavouriteActivity.class);
+                startActivity(intent);
+                break;
+            }
         }
         return super.onOptionsItemSelected(item);
     }
@@ -131,17 +153,22 @@ public class MovieActivityFragment extends Fragment implements
 
     @Override
     public Loader<List<PopularMovie>> onCreateLoader(int i, Bundle bundle) {
-        SharedPreferences sharedPreferences =
-                PreferenceManager.getDefaultSharedPreferences(getContext());
-        String sortBy = sharedPreferences.getString(
-                getString(R.string.settings_order_by_key),
-                getString(R.string.settings_order_by_default)
-        );
+        sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getContext());
+        int optionSelected = sharedPreferences.getInt(getString(R.string.sort_order_key),
+                R.string.sort_order_popular);
+        switch (optionSelected) {
+            case R.string.sort_order_popular:
+                mSortBy = "popular";
+                break;
+            case R.string.sort_order_top_rated:
+                mSortBy = "top_rated";
+                break;
+        }
 
         Uri baseUri = Uri.parse(MOVIE_REQUEST_URL);
         Uri.Builder uriBuilder = baseUri.buildUpon();
 
-        uriBuilder.appendPath(sortBy)
+        uriBuilder.appendPath(mSortBy)
                 .appendQueryParameter("api_key", BuildConfig.OPEN_MOVIE_API_KEY);
 
         // Create a new loader for the given URL
@@ -184,4 +211,5 @@ public class MovieActivityFragment extends Fragment implements
         // Loader reset to clear out existing data
         popularMovieAdapter.clear();
     }
+
 }

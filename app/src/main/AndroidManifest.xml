@@ -25,14 +25,6 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".MovieActivity" />
         </activity>
-        <activity
-            android:name=".SettingsActivity"
-            android:label="@string/settings_title">
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value=".MovieActivity" />
-        </activity>
-
         <provider
             android:name=".data.MovieProvider"
             android:authorities="me.anky.popularmovies"
