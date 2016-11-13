@@ -83,5 +83,10 @@ public class MovieContract {
          * Type: TEXT
          */
         public final static String COLUMN_MOVIE_OVERVIEW = "overview";
+
+        public static Uri buildMovieUriWithMovieId(String movieId){
+            return CONTENT_URI.buildUpon().appendQueryParameter(COLUMN_MOVIE_ID, movieId)
+                    .build();
+        }
     }
 }

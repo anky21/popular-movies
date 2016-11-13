@@ -2,7 +2,6 @@ package me.anky.popularmovies.favourite;
 
 import android.content.ContentResolver;
 import android.content.ContentValues;
-import android.content.Intent;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
@@ -33,11 +32,14 @@ import static me.anky.popularmovies.data.MovieContract.MovieEntry;
  */
 
 public class FavouriteDetailFragment extends Fragment implements
-        LoaderManager.LoaderCallbacks<Cursor>  {
+        LoaderManager.LoaderCallbacks<Cursor> {
 
-    public String mMovieId;
     ContentResolver mContentResolver;
     private static final int FAVOURITE_LOADER = 23;
+
+    static final String MOVIE_URI = "URI";
+
+    private Uri mUri;
 
     private static final String[] FAVOURITE_COLUMNS = {
             MovieEntry._ID,
@@ -72,14 +74,13 @@ public class FavouriteDetailFragment extends Fragment implements
 
     @Nullable
     @Override
-    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View rootView = inflater.inflate(R.layout.detail_fragment, container, false);
-
-        Intent intent = getActivity().getIntent();
-        if(intent != null && intent.hasExtra(Intent.EXTRA_TEXT)){
-            mMovieId = intent.getStringExtra(Intent.EXTRA_TEXT);
+    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container,
+                             @Nullable Bundle savedInstanceState) {
+        Bundle args = getArguments();
+        if (args != null) {
+            mUri = args.getParcelable(FavouriteDetailFragment.MOVIE_URI);
         }
-
+        View rootView = inflater.inflate(R.layout.detail_fragment, container, false);
         mContentResolver = getActivity().getContentResolver();
 
         mTitleTv = (TextView) rootView.findViewById(R.id.tv_title);
@@ -88,9 +89,9 @@ public class FavouriteDetailFragment extends Fragment implements
         mVoteAverageTv = (TextView) rootView.findViewById(R.id.tv_rating);
         mPlotTv = (TextView) rootView.findViewById(R.id.tv_overview);
 
-        mFavouriteView = (LinearLayout)rootView.findViewById(R.id.favourite_view);
-        mFavouriteIcon = (ImageView)rootView.findViewById(R.id.favorite_icon);
-        mFavouriteTv = (TextView)rootView.findViewById(R.id.favourite_text_view);
+        mFavouriteView = (LinearLayout) rootView.findViewById(R.id.favourite_view);
+        mFavouriteIcon = (ImageView) rootView.findViewById(R.id.favorite_icon);
+        mFavouriteTv = (TextView) rootView.findViewById(R.id.favourite_text_view);
 
         mFavouriteIcon.setImageResource(R.drawable.ic_favorite_24dp);
         mFavouriteTv.setText(R.string.favourited);
@@ -106,19 +107,23 @@ public class FavouriteDetailFragment extends Fragment implements
 
     @Override
     public Loader<Cursor> onCreateLoader(int id, Bundle args) {
-        return new CursorLoader(
-                getActivity(),
-                MovieEntry.CONTENT_URI,
-                FAVOURITE_COLUMNS,
-                MovieEntry.COLUMN_MOVIE_ID + "=?",
-                new String[]{mMovieId},
-                null
-        );
+        if (null != mUri) {
+            return new CursorLoader(
+                    getActivity(),
+                    mUri,
+                    FAVOURITE_COLUMNS,
+                    null,
+                    null,
+                    null
+            );
+        }
+        return null;
     }
 
     @Override
     public void onLoadFinished(Loader<Cursor> loader, Cursor data) {
         if (data != null && data.moveToFirst()) {
+            final String movieId = data.getString(COL_MOVIE_ID);
             final String movieTitle = data.getString(COL_MOVIE_TITLE);
             mTitleTv.setText(movieTitle);
 
@@ -150,17 +155,22 @@ public class FavouriteDetailFragment extends Fragment implements
                         // Unmark as favourite and delete it from the database
 
                         mContentResolver.delete(
-                                MovieEntry.CONTENT_URI,
-                                MovieEntry.COLUMN_MOVIE_ID + "=?",
-                                new String[]{mMovieId}
+                                mUri,
+                                null,
+                                null
                         );
+//                        mContentResolver.delete(
+//                                MovieEntry.CONTENT_URI,
+//                                MovieEntry.COLUMN_MOVIE_ID + "=?",
+//                                new String[]{mMovieId}
+//                        );
 
                         // Update favourite icon and text
-                        setFavouriteImageText(false, mFavouriteIcon,mFavouriteTv);
+                        setFavouriteImageText(false, mFavouriteIcon, mFavouriteTv);
                     } else {
                         // Add as favourite and insert it into the database
                         ContentValues values = new ContentValues();
-                        values.put(MovieEntry.COLUMN_MOVIE_ID, mMovieId);
+                        values.put(MovieEntry.COLUMN_MOVIE_ID, movieId);
                         values.put(MovieEntry.COLUMN_MOVIE_TITLE, movieTitle);
                         values.put(MovieEntry.COLUMN_MOVIE_PATH, posterPath);
                         values.put(MovieEntry.COLUMN_MOVIE_DATE, releaseDate);
@@ -170,7 +180,7 @@ public class FavouriteDetailFragment extends Fragment implements
                         Uri newUri = mContentResolver.insert(MovieEntry.CONTENT_URI, values);
 
                         // Update favourite icon and text
-                        setFavouriteImageText(true,mFavouriteIcon,mFavouriteTv);
+                        setFavouriteImageText(true, mFavouriteIcon, mFavouriteTv);
                     }
                 }
             });

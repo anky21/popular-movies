@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:baselineAligned="false"
+    android:divider="?android:attr/dividerHorizontal"
+    android:orientation="horizontal"
+    tools:context="me.anky.popularmovies.favourite.FavouriteActivity">
+
+
+    <fragment
+        android:id="@+id/fragment_favourite"
+        android:name="me.anky.popularmovies.favourite.FavouriteFragment"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="2"></fragment>
+
+    <FrameLayout
+        android:id="@+id/favourite_detail_contaier"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="3"></FrameLayout>
+</LinearLayout>

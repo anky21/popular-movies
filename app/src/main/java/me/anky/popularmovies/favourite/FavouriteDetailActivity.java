@@ -13,8 +13,14 @@ public class FavouriteDetailActivity extends AppCompatActivity {
         setContentView(R.layout.activity_favourite_detail);
 
         if (savedInstanceState == null){
+            Bundle args = new Bundle();
+            args.putParcelable(FavouriteDetailFragment.MOVIE_URI, getIntent().getData());
+
+            FavouriteDetailFragment fragment = new FavouriteDetailFragment();
+            fragment.setArguments(args);
+
             getSupportFragmentManager().beginTransaction()
-                    .add(R.id.activity_favourite_detail, new FavouriteDetailFragment()).commit();
+                    .add(R.id.activity_favourite_detail, fragment).commit();
         }
 
     }

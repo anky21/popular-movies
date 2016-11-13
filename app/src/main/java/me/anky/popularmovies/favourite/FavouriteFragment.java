@@ -2,9 +2,9 @@ package me.anky.popularmovies.favourite;
 
 import android.app.LoaderManager;
 import android.content.CursorLoader;
-import android.content.Intent;
 import android.content.Loader;
 import android.database.Cursor;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -17,7 +17,8 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import me.anky.popularmovies.R;
-import me.anky.popularmovies.data.MovieContract;
+
+import static me.anky.popularmovies.data.MovieContract.MovieEntry;
 
 /**
  * Created by anky_ on 10/11/2016.
@@ -31,6 +32,15 @@ public class FavouriteFragment extends Fragment implements
     FavouriteCursorAdapter mCursorAdapter;
     private TextView mEmptyStateTextView;
     private GridView favouriteGridView;
+
+    /**
+     * A callback interface that allows the fragment to pass data on to the activity
+     */
+    public interface Callback {
+        public void onItemSelected(Uri contentUri);
+    }
+
+    public FavouriteFragment(){}
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -63,10 +73,8 @@ public class FavouriteFragment extends Fragment implements
                 Cursor cursor = (Cursor) adapterView.getItemAtPosition(i);
                 if (cursor != null) {
                     String movieId = cursor.
-                            getString(cursor.getColumnIndex(MovieContract.MovieEntry.COLUMN_MOVIE_ID));
-                    Intent intent = new Intent(getActivity(), FavouriteDetailActivity.class);
-                    intent.putExtra(Intent.EXTRA_TEXT, movieId);
-                    startActivity(intent);
+                            getString(cursor.getColumnIndex(MovieEntry.COLUMN_MOVIE_ID));
+                    ((Callback)getActivity()).onItemSelected(MovieEntry.buildMovieUriWithMovieId(movieId));
                 }
             }
         });
@@ -77,12 +85,12 @@ public class FavouriteFragment extends Fragment implements
     @Override
     public Loader<Cursor> onCreateLoader(int i, Bundle bundle) {
         String[] projection = {
-                MovieContract.MovieEntry._ID,
-                MovieContract.MovieEntry.COLUMN_MOVIE_ID,
-                MovieContract.MovieEntry.COLUMN_MOVIE_PATH};
+                MovieEntry._ID,
+                MovieEntry.COLUMN_MOVIE_ID,
+                MovieEntry.COLUMN_MOVIE_PATH};
 
         return new CursorLoader(getContext(),
-                MovieContract.MovieEntry.CONTENT_URI,
+                MovieEntry.CONTENT_URI,
                 projection,
                 null,
                 null,
