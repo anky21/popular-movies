@@ -93,9 +93,6 @@ public class FavouriteDetailFragment extends Fragment implements
         mFavouriteIcon = (ImageView) rootView.findViewById(R.id.favorite_icon);
         mFavouriteTv = (TextView) rootView.findViewById(R.id.favourite_text_view);
 
-        mFavouriteIcon.setImageResource(R.drawable.ic_favorite_24dp);
-        mFavouriteTv.setText(R.string.favourited);
-
         return rootView;
     }
 
@@ -145,6 +142,9 @@ public class FavouriteDetailFragment extends Fragment implements
             final String moviePlot = data.getString(COL_MOVIE_OVERVIEW);
             mPlotTv.setText(moviePlot);
 
+            mFavouriteIcon.setImageResource(R.drawable.ic_favorite_24dp);
+            mFavouriteTv.setText(R.string.favourited);
+
             mFavouriteView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
@@ -159,11 +159,6 @@ public class FavouriteDetailFragment extends Fragment implements
                                 null,
                                 null
                         );
-//                        mContentResolver.delete(
-//                                MovieEntry.CONTENT_URI,
-//                                MovieEntry.COLUMN_MOVIE_ID + "=?",
-//                                new String[]{mMovieId}
-//                        );
 
                         // Update favourite icon and text
                         setFavouriteImageText(false, mFavouriteIcon, mFavouriteTv);
@@ -189,6 +184,5 @@ public class FavouriteDetailFragment extends Fragment implements
 
     @Override
     public void onLoaderReset(Loader<Cursor> loader) {
-
     }
 }

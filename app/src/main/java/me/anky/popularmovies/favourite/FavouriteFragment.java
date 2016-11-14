@@ -72,9 +72,9 @@ public class FavouriteFragment extends Fragment implements
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 Cursor cursor = (Cursor) adapterView.getItemAtPosition(i);
                 if (cursor != null) {
-                    String movieId = cursor.
-                            getString(cursor.getColumnIndex(MovieEntry.COLUMN_MOVIE_ID));
-                    ((Callback)getActivity()).onItemSelected(MovieEntry.buildMovieUriWithMovieId(movieId));
+                    String columnId = cursor.
+                            getString(cursor.getColumnIndex(MovieEntry._ID));
+                    ((Callback)getActivity()).onItemSelected(MovieEntry.buildMovieUriWithId(columnId));
                 }
             }
         });

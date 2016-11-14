@@ -84,8 +84,8 @@ public class MovieContract {
          */
         public final static String COLUMN_MOVIE_OVERVIEW = "overview";
 
-        public static Uri buildMovieUriWithMovieId(String movieId){
-            return CONTENT_URI.buildUpon().appendQueryParameter(COLUMN_MOVIE_ID, movieId)
+        public static Uri buildMovieUriWithId(String _ID){
+            return CONTENT_URI.buildUpon().appendPath(_ID)
                     .build();
         }
     }

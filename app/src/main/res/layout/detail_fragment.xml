@@ -10,12 +10,6 @@
         android:layout_width="match_parent"
         android:orientation="vertical">
 
-        <TextView
-            style="@style/TextViewBasic.Title"
-            android:id="@+id/tv_title"
-            tools:text="Testing"
-            android:textIsSelectable="true"/>
-
         <LinearLayout
             android:layout_height="wrap_content"
             android:layout_width="match_parent"
@@ -25,7 +19,7 @@
             <ImageView
                 style="@style/ThumbImageView"
                 android:id="@+id/iv_movie_thumb"
-                android:layout_below="@id/tv_title" />
+                />
 
             <LinearLayout
                 android:layout_height="wrap_content"
@@ -33,6 +27,12 @@
                 android:layout_width="0dp"
                 android:orientation="vertical"
                 android:paddingLeft="@dimen/Medium_padding">
+
+                <TextView
+                    style="@style/TextViewBasic.Title"
+                    android:id="@+id/tv_title"
+                    tools:text="Testing"
+                    android:textIsSelectable="true"/>
 
                 <TextView
                     style="@style/TextViewBasic.Large"

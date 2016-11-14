@@ -29,12 +29,11 @@
     <!-- Movie Title TextView style -->
     <style name="TextViewBasic.Title">
         <item name="android:layout_width">match_parent</item>
-        <item name="android:background">@color/colorPrimary</item>
         <item name="android:gravity">center</item>
         <item name="android:textSize">@dimen/movie_title_text_size</item>
         <item name="android:paddingTop">@dimen/small_padding</item>
         <item name="android:paddingBottom">@dimen/small_padding</item>
-        <item name="android:textColor">@android:color/white</item>
+        <item name="android:textColor">@android:color/black</item>
     </style>
 
     <!-- ImageView-->
