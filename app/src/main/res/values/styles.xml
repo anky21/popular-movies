@@ -49,6 +49,9 @@
         <item name="tabSelectedTextColor">@android:color/white</item>
         <item name="tabTextAppearance">@style/FragmentTabTextAppearance</item>
         <item name="tabBackground">@color/colorPrimary</item>
+        <item name="tabMaxWidth">0dp</item>
+        <item name="tabGravity">fill</item>
+        <item name="tabMode">fixed</item>
     </style>
 
     <!-- Text appearance style for a category tab -->
