@@ -12,11 +12,14 @@ public class DetailedActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detailed);
 
+        Bundle args = new Bundle();
+        args.putParcelable("MOVIE_DATA", getIntent().getParcelableExtra("movieData"));
+
         // Find the view pager to allow the user to swipe between fragments
         ViewPager viewPager = (ViewPager) findViewById(R.id.viewpager);
 
         // Create an adapter that controls the display of fragments
-        FragmentAdapter adapter = new FragmentAdapter(this, getSupportFragmentManager());
+        FragmentAdapter adapter = new FragmentAdapter(this, getSupportFragmentManager(),args);
 
         // Set the adapter onto the view pager
         viewPager.setAdapter(adapter);

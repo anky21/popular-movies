@@ -1,7 +1,6 @@
 package me.anky.popularmovies.Review;
 
 import android.app.LoaderManager;
-import android.content.Intent;
 import android.content.Loader;
 import android.net.Uri;
 import android.os.Bundle;
@@ -71,10 +70,10 @@ public class MovieReviewFragment extends Fragment implements
 
     @Override
     public Loader<List<MovieReview>> onCreateLoader(int i, Bundle bundle) {
-        // Read Movie ID from the Intent
-        Intent intent = getActivity().getIntent();
-        if (intent != null && intent.hasExtra("movieData")) {
-            PopularMovie movieData = intent.getParcelableExtra("movieData");
+        // Read Movie ID from the Bundle
+        Bundle args = getArguments();
+        if (args != null) {
+            PopularMovie movieData = args.getParcelable("MOVIE_DATA");
             mMovieId = movieData.getMovieId();
         }
 

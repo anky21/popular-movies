@@ -13,7 +13,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.GridView;
-import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import me.anky.popularmovies.R;
@@ -37,7 +36,7 @@ public class FavouriteFragment extends Fragment implements
      * A callback interface that allows the fragment to pass data on to the activity
      */
     public interface Callback {
-        public void onItemSelected(Uri contentUri);
+        public void onFavouriteSelected(Uri contentUri);
     }
 
     public FavouriteFragment(){}
@@ -52,14 +51,11 @@ public class FavouriteFragment extends Fragment implements
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View rootView = inflater.inflate(R.layout.movie_activity_fragment, container, false);
+        View rootView = inflater.inflate(R.layout.favourite_fragment, container, false);
 
-        // Remove the ProgressBar
-        ProgressBar progressBar = (ProgressBar) rootView.findViewById(R.id.progress_bar);
-        progressBar.setVisibility(View.GONE);
         mEmptyStateTextView = (TextView) rootView.findViewById(R.id.empty_list_view);
 
-        favouriteGridView = (GridView) rootView.findViewById(R.id.movie_activity_grid_view);
+        favouriteGridView = (GridView) rootView.findViewById(R.id.movie_collection_grid_view);
 
         mCursorAdapter = new FavouriteCursorAdapter(getContext(), null);
 
@@ -74,7 +70,7 @@ public class FavouriteFragment extends Fragment implements
                 if (cursor != null) {
                     String columnId = cursor.
                             getString(cursor.getColumnIndex(MovieEntry._ID));
-                    ((Callback)getActivity()).onItemSelected(MovieEntry.buildMovieUriWithId(columnId));
+                    ((Callback)getActivity()).onFavouriteSelected(MovieEntry.buildMovieUriWithId(columnId));
                 }
             }
         });

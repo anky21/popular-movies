@@ -48,6 +48,13 @@ public class MovieActivityFragment extends Fragment implements
     private String mSortBy;
     SharedPreferences sharedPreferences;
 
+    /**
+     * A callback interface that allows the fragment to pass data on to the activity
+     */
+    public interface MovieCallback {
+        public void onItemSelected(PopularMovie movieData);
+    }
+
     public MovieActivityFragment() {
         // Required empty public constructor
     }
@@ -142,10 +149,8 @@ public class MovieActivityFragment extends Fragment implements
         gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                Intent intent = new Intent(getActivity(), DetailedActivity.class);
                 PopularMovie movieData = popularMovieAdapter.getItem(i);
-                intent.putExtra("movieData", movieData);
-                startActivity(intent);
+                ((MovieCallback)getActivity()).onItemSelected(movieData);
             }
         });
         return rootView;

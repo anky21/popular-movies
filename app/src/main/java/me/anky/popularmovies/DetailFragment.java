@@ -2,7 +2,6 @@ package me.anky.popularmovies;
 
 import android.content.ContentResolver;
 import android.content.ContentValues;
-import android.content.Intent;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
@@ -42,18 +41,17 @@ public class DetailFragment extends Fragment {
         View rootView = inflater.inflate(R.layout.detail_fragment, container, false);
 
         mContentResolver = getActivity().getContentResolver();
-
-        Intent intent = getActivity().getIntent();
-        if (intent != null && intent.hasExtra("movieData")) {
-            PopularMovie movieData = intent.getParcelableExtra("movieData");
+        Bundle args = getArguments();
+        if (args != null) {
+            PopularMovie mMovieData = args.getParcelable("MOVIE_DATA");
 
             //Define the parameters in the movieData
-            final String movieId = movieData.getMovieId();
-            final String originalTitle = movieData.getOriginalTitle();
-            final String posterPath = movieData.getPosterPath();
-            final String releaseDate = movieData.getRleaseDate();
-            final double voteAverage = movieData.getVoteAverage();
-            final String overview = movieData.getOverview();
+            final String movieId = mMovieData.getMovieId();
+            final String originalTitle = mMovieData.getOriginalTitle();
+            final String posterPath = mMovieData.getPosterPath();
+            final String releaseDate = mMovieData.getRleaseDate();
+            final double voteAverage = mMovieData.getVoteAverage();
+            final String overview = mMovieData.getOverview();
 
             // Display movie title in a text view
             TextView titleTV = (TextView) rootView.findViewById(R.id.tv_title);
@@ -130,7 +128,7 @@ public class DetailFragment extends Fragment {
         return rootView;
     }
 
-    public static  void setFavouriteImageText(boolean favourite, ImageView imageView, TextView textView) {
+    public static void setFavouriteImageText(boolean favourite, ImageView imageView, TextView textView) {
         if (favourite) {
             imageView.setImageResource(R.drawable.ic_favorite_24dp);
             textView.setText(R.string.favourited);

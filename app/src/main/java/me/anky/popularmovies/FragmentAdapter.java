@@ -1,6 +1,7 @@
 package me.anky.popularmovies;
 
 import android.content.Context;
+import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
@@ -14,20 +15,28 @@ import me.anky.popularmovies.Trailer.TrailerFragment;
 
 public class FragmentAdapter extends FragmentPagerAdapter {
     private Context mContext;
+    private Bundle fragmentBundle;
 
-    public FragmentAdapter(Context context, FragmentManager fm) {
+    public FragmentAdapter(Context context, FragmentManager fm, Bundle data){
         super(fm);
+        fragmentBundle = data;
         mContext = context;
     }
 
     @Override
     public Fragment getItem(int position) {
         if (position == 0) {
-            return new DetailFragment();
+            final DetailFragment df = new DetailFragment();
+            df.setArguments(fragmentBundle);
+            return df;
         } else if (position == 1) {
-            return new TrailerFragment();
+            final TrailerFragment tf = new TrailerFragment();
+            tf.setArguments(fragmentBundle);
+            return tf;
         } else {
-            return new MovieReviewFragment();
+            final MovieReviewFragment mrf = new MovieReviewFragment();
+            mrf.setArguments(fragmentBundle);
+            return mrf;
         }
     }
 

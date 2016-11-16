@@ -79,6 +79,7 @@ public class TrailerFragment extends Fragment implements
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         // Get a ref to the LoaderManager, in order to interact with loaders
         LoaderManager loaderManager = getActivity().getLoaderManager();
 
@@ -98,6 +99,8 @@ public class TrailerFragment extends Fragment implements
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.trailer_fragment, container, false);
+
+        Log.v(LOG_TAG, "Testing onCreateView ");
 
         movieTrailerAdapter = new MovieTrailerAdapter(getActivity(),
                 new ArrayList<MovieTrailer>());
@@ -127,10 +130,9 @@ public class TrailerFragment extends Fragment implements
 
     @Override
     public Loader<List<MovieTrailer>> onCreateLoader(int i, Bundle bundle) {
-        // Read Movie ID from the Intent
-        Intent intent = getActivity().getIntent();
-        if (intent != null && intent.hasExtra("movieData")) {
-            PopularMovie movieData = intent.getParcelableExtra("movieData");
+        Bundle args = getArguments();
+        if (args != null) {
+            PopularMovie movieData = args.getParcelable("MOVIE_DATA");
             mMovieId = movieData.getMovieId();
             mMovieTitle = movieData.getOriginalTitle();
         }

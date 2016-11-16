@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/container"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="horizontal"
+    tools:layout="@layout/movie_activity_fragment">
+
+    <fragment
+        android:id="@+id/fragment_movie_activity"
+        android:name="me.anky.popularmovies.MovieActivityFragment"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="2"></fragment>
+
+    <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="3">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <FrameLayout
+                android:id="@+id/fragment_detail_container"
+                android:name="me.anky.popularmovies.DetailFragment"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="@dimen/Medium_padding"
+                android:text="@string/trailer_section"
+                android:textAppearance="?android:textAppearanceLarge" />
+
+            <FrameLayout
+                android:id="@+id/fragment_trailer_container"
+                android:name="me.anky.popularmovies.Trailer.TrailerFragment"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+            <!--
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="@dimen/Medium_padding"
+                android:text="@string/review_section"
+                android:textAppearance="?android:textAppearanceLarge" />
+
+            <FrameLayout
+                android:id="@+id/fragment_review_container"
+                android:name="me.anky.popularmovies.Review.MovieReviewFragment"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+            -->
+        </LinearLayout>
+    </ScrollView>
+
+</LinearLayout>

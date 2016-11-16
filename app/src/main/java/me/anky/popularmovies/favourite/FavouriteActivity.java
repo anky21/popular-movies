@@ -34,7 +34,7 @@ public class FavouriteActivity extends AppCompatActivity
     }
 
     @Override
-    public void onItemSelected(Uri contentUri) {
+    public void onFavouriteSelected(Uri contentUri) {
         if(mTwoPane){
             Bundle args = new Bundle();
             args.putParcelable(FavouriteDetailFragment.MOVIE_URI, contentUri);
