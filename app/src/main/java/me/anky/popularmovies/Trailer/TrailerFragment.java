@@ -1,5 +1,6 @@
 package me.anky.popularmovies.Trailer;
 
+import android.app.Activity;
 import android.app.LoaderManager;
 import android.content.Intent;
 import android.content.Loader;
@@ -40,7 +41,7 @@ public class TrailerFragment extends Fragment implements
 
     private static final String YOUTUBE_REQUEST_URL = "https://youtu.be/";
 
-    private static final int TRAILER_LOADER_ID = 1;
+    private static final int TRAILER_LOADER_ID = 100;
 
     private MovieTrailerAdapter movieTrailerAdapter;
 
@@ -68,7 +69,7 @@ public class TrailerFragment extends Fragment implements
         }
     }
 
-    private Intent createShareIntent(){
+    private Intent createShareIntent() {
         String shareMessage = "Check this movie out: " + mMovieTitle + ", and the Trailer: " + mTrailer1;
         Intent intent = new Intent(Intent.ACTION_SEND);
         intent.setType("text/plain");
@@ -79,15 +80,7 @@ public class TrailerFragment extends Fragment implements
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        // Get a ref to the LoaderManager, in order to interact with loaders
-        LoaderManager loaderManager = getActivity().getLoaderManager();
-
-        /**
-         * Initialise the loader. pass in the int ID constant defined above and pass in null for
-         * the bundle. Pass in this activity for the LoaderCallbacks parameter
-         */
-        loaderManager.initLoader(TRAILER_LOADER_ID, null, this);
+        Log.v(LOG_TAG, "Testing on Create");
     }
 
     @Override
@@ -125,11 +118,25 @@ public class TrailerFragment extends Fragment implements
             }
         });
 
+
         return rootView;
     }
 
     @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        LoaderManager loaderManager = getActivity().getLoaderManager();
+
+        /**
+         * Initialise the loader. pass in the int ID constant defined above and pass in null for
+         * the bundle. Pass in this activity for the LoaderCallbacks parameter
+         */
+        loaderManager.initLoader(TRAILER_LOADER_ID, null, this);
+    }
+
+    @Override
     public Loader<List<MovieTrailer>> onCreateLoader(int i, Bundle bundle) {
+        Log.v(LOG_TAG, "Testing onCreateLoader");
         Bundle args = getArguments();
         if (args != null) {
             PopularMovie movieData = args.getParcelable("MOVIE_DATA");
@@ -148,18 +155,87 @@ public class TrailerFragment extends Fragment implements
 
     @Override
     public void onLoadFinished(Loader<List<MovieTrailer>> loader, List<MovieTrailer> movieTrailers) {
+        Log.v(LOG_TAG, "Testing onLoadFinished");
         movieTrailerAdapter.clear();
 
         mEmptyTrailerListTextView.setText(R.string.no_trailers_found);
 
+        movieTrailerAdapter.addAll(movieTrailers);
         if (movieTrailers != null && !movieTrailers.isEmpty()) {
-            movieTrailerAdapter.addAll(movieTrailers);
             mTrailer1 = YOUTUBE_REQUEST_URL + movieTrailerAdapter.getItem(0).getTrailerKey();
         }
     }
 
     @Override
     public void onLoaderReset(Loader<List<MovieTrailer>> loader) {
+        Log.v(LOG_TAG, "Testing onLoaderReset");
         movieTrailerAdapter.clear();
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        LoaderManager loaderManager = getActivity().getLoaderManager();
+
+        /**
+         * Initialise the loader. pass in the int ID constant defined above and pass in null for
+         * the bundle. Pass in this activity for the LoaderCallbacks parameter
+         */
+        loaderManager.restartLoader(TRAILER_LOADER_ID, null, this);
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        Log.v(LOG_TAG, "Testing onResume");
+        LoaderManager loaderManager = getActivity().getLoaderManager();
+
+        /**
+         * Initialise the loader. pass in the int ID constant defined above and pass in null for
+         * the bundle. Pass in this activity for the LoaderCallbacks parameter
+         */
+        loaderManager.restartLoader(TRAILER_LOADER_ID, null, this);
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        LoaderManager loaderManager = getActivity().getLoaderManager();
+
+        /**
+         * Initialise the loader. pass in the int ID constant defined above and pass in null for
+         * the bundle. Pass in this activity for the LoaderCallbacks parameter
+         */
+        loaderManager.destroyLoader(TRAILER_LOADER_ID);
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        Log.v(LOG_TAG, "Testing on Pause");
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        Log.v(LOG_TAG, "Testing onDestroyView");
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        Log.v(LOG_TAG, "Testing onDestroy");
+    }
+
+    @Override
+    public void onDetach() {
+        super.onDetach();
+        Log.v(LOG_TAG, "Testing onDetach");
+    }
+
+    @Override
+    public void onAttach(Activity activity) {
+        super.onAttach(activity);
+        Log.v(LOG_TAG, "Testing onAttach");
     }
 }

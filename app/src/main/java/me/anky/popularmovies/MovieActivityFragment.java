@@ -79,8 +79,7 @@ public class MovieActivityFragment extends Fragment implements
             movieList = savedInstanceState.getParcelableArrayList("movies");
         }
 
-
-//            // Get a ref to the LoaderManager, in order to interact with loaders
+        // Get a ref to the LoaderManager, in order to interact with loaders
         LoaderManager loaderManager = getActivity().getLoaderManager();
 
         /**
@@ -150,7 +149,7 @@ public class MovieActivityFragment extends Fragment implements
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 PopularMovie movieData = popularMovieAdapter.getItem(i);
-                ((MovieCallback)getActivity()).onItemSelected(movieData);
+                ((MovieCallback) getActivity()).onItemSelected(movieData);
             }
         });
         return rootView;

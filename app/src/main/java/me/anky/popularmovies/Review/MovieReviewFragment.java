@@ -42,9 +42,6 @@ public class MovieReviewFragment extends Fragment implements
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        // Initialise the loader
-        LoaderManager loaderManager = getActivity().getLoaderManager();
-        loaderManager.initLoader(REVIEW_LOADER_ID, null, this);
     }
 
     @Override
@@ -64,6 +61,10 @@ public class MovieReviewFragment extends Fragment implements
 
         listView.setEmptyView(mEmptyReviewListTextView);
         listView.setAdapter(movieReviewAdapter);
+
+        // Initialise the loader
+        LoaderManager loaderManager = getActivity().getLoaderManager();
+        loaderManager.initLoader(REVIEW_LOADER_ID, null, this);
 
         return rootView;
     }
@@ -105,7 +106,6 @@ public class MovieReviewFragment extends Fragment implements
     @Override
     public void onStart() {
         super.onStart();
-
         LoaderManager loaderManager = getActivity().getLoaderManager();
         loaderManager.restartLoader(REVIEW_LOADER_ID, null, this);
     }

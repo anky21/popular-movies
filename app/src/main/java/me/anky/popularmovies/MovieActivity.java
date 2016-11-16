@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 
+import me.anky.popularmovies.Review.MovieReviewFragment;
 import me.anky.popularmovies.Trailer.TrailerFragment;
 
 public class MovieActivity extends AppCompatActivity
@@ -61,13 +62,13 @@ public class MovieActivity extends AppCompatActivity
                     .replace(R.id.fragment_trailer_container, tf, TRAILERFRAGMENT_TAG)
                     .commit();
 
-//            // Replace MovieReviewFragment
-//            MovieReviewFragment mrf = new MovieReviewFragment();
-//            mrf.setArguments(args);
-//
-//            getSupportFragmentManager().beginTransaction()
-//                    .replace(R.id.fragment_review_container, mrf, REVIEWFRAGMENT_TAG)
-//                    .commit();
+            // Replace MovieReviewFragment
+            MovieReviewFragment mrf = new MovieReviewFragment();
+            mrf.setArguments(args);
+
+            getSupportFragmentManager().beginTransaction()
+                    .replace(R.id.fragment_review_container, mrf, REVIEWFRAGMENT_TAG)
+                    .commit();
         } else {
             Intent intent = new Intent(this, DetailedActivity.class);
             intent.putExtra("movieData", movieData);
