@@ -17,6 +17,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import me.anky.popularmovies.R;
+import me.anky.popularmovies.Utilities;
 
 import static me.anky.popularmovies.data.MovieContract.MovieEntry;
 
@@ -124,6 +125,10 @@ public class FavouriteFragment extends Fragment implements
             // If we don't need to restart the loader, and there's a desired position to restore
             // to, do so now.
             favouriteGridView.smoothScrollToPosition(mPosition);
+        }
+
+        if(Utilities.isTablet(getContext())){
+            favouriteGridView.performItemClick(favouriteGridView.getChildAt(0), 0, mCursorAdapter.getItemId(0));
         }
     }
 

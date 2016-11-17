@@ -228,6 +228,10 @@ public class MovieActivityFragment extends Fragment implements
 
         if (mPosition != GridView.INVALID_POSITION) {
             mGridView.smoothScrollToPosition(mPosition);
+        } else {
+            if (Utilities.isTablet(getContext())) {
+                mGridView.performItemClick(mGridView.getChildAt(0), 0, popularMovieAdapter.getItemId(0));
+            }
         }
     }
 

@@ -1,10 +1,8 @@
 package me.anky.popularmovies.Trailer;
 
 import android.app.LoaderManager;
-import android.content.Context;
 import android.content.Intent;
 import android.content.Loader;
-import android.content.res.Configuration;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -29,6 +27,7 @@ import me.anky.popularmovies.BuildConfig;
 import me.anky.popularmovies.MovieActivityFragment;
 import me.anky.popularmovies.PopularMovie;
 import me.anky.popularmovies.R;
+import me.anky.popularmovies.Utilities;
 
 /**
  * Created by anky_ on 4/11/2016.
@@ -82,7 +81,7 @@ public class TrailerFragment extends Fragment implements
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         // Initialise the Loader here if it's a phone
-        if(!isTablet(getContext())){
+        if(!Utilities.isTablet(getContext())){
             LoaderManager loaderManager = getActivity().getLoaderManager();
             loaderManager.initLoader(TRAILER_LOADER_ID, null, this);
         }
@@ -178,11 +177,5 @@ public class TrailerFragment extends Fragment implements
          * the bundle. Pass in this activity for the LoaderCallbacks parameter
          */
         loaderManager.restartLoader(TRAILER_LOADER_ID, null, this);
-    }
-
-    public boolean isTablet(Context context) {
-        boolean xlarge = ((context.getResources().getConfiguration().screenLayout & Configuration.SCREENLAYOUT_SIZE_MASK) == 4);
-        boolean large = ((context.getResources().getConfiguration().screenLayout & Configuration.SCREENLAYOUT_SIZE_MASK) == Configuration.SCREENLAYOUT_SIZE_LARGE);
-        return (xlarge || large);
     }
 }

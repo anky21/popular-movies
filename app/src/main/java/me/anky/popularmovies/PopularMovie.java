@@ -21,7 +21,7 @@ public class PopularMovie implements Parcelable {
     /**
      * Construct a new {@link PopularMovie} object
      *
-     * @param movieId   is the ID of the movie
+     * @param movieId       is the ID of the movie
      * @param posterPath    is the path of the movie poster
      * @param originalTitle is the title
      * @param overview      is the plot
@@ -47,7 +47,7 @@ public class PopularMovie implements Parcelable {
         mRleaseDate = in.readString();
     }
 
-    public String getMovieId(){
+    public String getMovieId() {
         return mMovieId;
     }
 

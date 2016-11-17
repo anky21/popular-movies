@@ -99,6 +99,8 @@ public class FavouriteDetailFragment extends Fragment implements
         mFavouriteIcon = (ImageView) rootView.findViewById(R.id.favorite_icon);
         mFavouriteTv = (TextView) rootView.findViewById(R.id.favourite_text_view);
 
+        getLoaderManager().initLoader(FAVOURITE_LOADER, null, this);
+
         return rootView;
     }
 

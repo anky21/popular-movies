@@ -19,7 +19,7 @@ public class DetailedActivity extends AppCompatActivity {
         ViewPager viewPager = (ViewPager) findViewById(R.id.viewpager);
 
         // Create an adapter that controls the display of fragments
-        FragmentAdapter adapter = new FragmentAdapter(this, getSupportFragmentManager(),args);
+        FragmentAdapter adapter = new FragmentAdapter(this, getSupportFragmentManager(), args);
 
         // Set the adapter onto the view pager
         viewPager.setAdapter(adapter);
