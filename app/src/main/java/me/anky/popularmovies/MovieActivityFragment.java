@@ -45,6 +45,10 @@ public class MovieActivityFragment extends Fragment implements
     private TextView mEmptyStateTextView;
     private ProgressBar mProgressBar;
 
+    private GridView mGridView;
+    private int mPosition = GridView.INVALID_POSITION;
+    private static final String SELECTED_KEY = "selected_position";
+
     private String mSortBy;
     SharedPreferences sharedPreferences;
 
@@ -125,6 +129,11 @@ public class MovieActivityFragment extends Fragment implements
 
     @Override
     public void onSaveInstanceState(Bundle outState) {
+        // When tablets rotate, saves the currently selected list item
+        if (mPosition != GridView.INVALID_POSITION) {
+            outState.putInt(SELECTED_KEY, mPosition);
+        }
+
         super.onSaveInstanceState(outState);
     }
 
@@ -140,18 +149,26 @@ public class MovieActivityFragment extends Fragment implements
                 new ArrayList<PopularMovie>());
 
         // Get a reference to the GridView, and attach this adapter to it.
-        GridView gridView = (GridView) rootView.findViewById(R.id.movie_activity_grid_view);
+        mGridView = (GridView) rootView.findViewById(R.id.movie_activity_grid_view);
         mEmptyStateTextView = (TextView) rootView.findViewById(R.id.empty_list_view);
-        gridView.setEmptyView(mEmptyStateTextView);
-        gridView.setAdapter(popularMovieAdapter);
+        mGridView.setEmptyView(mEmptyStateTextView);
+        mGridView.setAdapter(popularMovieAdapter);
 
-        gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        mGridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 PopularMovie movieData = popularMovieAdapter.getItem(i);
                 ((MovieCallback) getActivity()).onItemSelected(movieData);
+
+                mPosition = i;
             }
         });
+
+        // If there's instance state, mine it for useful info
+        if (savedInstanceState != null && savedInstanceState.containsKey(SELECTED_KEY)) {
+            mPosition = savedInstanceState.getInt(SELECTED_KEY);
+        }
+
         return rootView;
     }
 
@@ -208,6 +225,10 @@ public class MovieActivityFragment extends Fragment implements
         if (popularMovies != null && !popularMovies.isEmpty()) {
             popularMovieAdapter.addAll(popularMovies);
         }
+
+        if (mPosition != GridView.INVALID_POSITION) {
+            mGridView.smoothScrollToPosition(mPosition);
+        }
     }
 
     @Override
@@ -215,5 +236,4 @@ public class MovieActivityFragment extends Fragment implements
         // Loader reset to clear out existing data
         popularMovieAdapter.clear();
     }
-
 }

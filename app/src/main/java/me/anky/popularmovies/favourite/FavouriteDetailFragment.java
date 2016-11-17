@@ -103,18 +103,6 @@ public class FavouriteDetailFragment extends Fragment implements
     }
 
     @Override
-    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
-//        getLoaderManager().restartLoader(FAVOURITE_LOADER, null, this);
-    }
-
-    @Override
-    public void onResume() {
-        super.onResume();
-        getLoaderManager().restartLoader(FAVOURITE_LOADER, null, this);
-    }
-
-    @Override
     public Loader<Cursor> onCreateLoader(int id, Bundle args) {
         if (null != mUri) {
             return new CursorLoader(

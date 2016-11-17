@@ -13,6 +13,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.GridView;
+import android.widget.ListView;
 import android.widget.TextView;
 
 import me.anky.popularmovies.R;
@@ -31,6 +32,9 @@ public class FavouriteFragment extends Fragment implements
     FavouriteCursorAdapter mCursorAdapter;
     private TextView mEmptyStateTextView;
     private GridView favouriteGridView;
+    private int mPosition = GridView.INVALID_POSITION;
+    private static final String SELECTED_KEY = "selected_position";
+
 
     /**
      * A callback interface that allows the fragment to pass data on to the activity
@@ -46,6 +50,15 @@ public class FavouriteFragment extends Fragment implements
         super.onCreate(savedInstanceState);
         // Kick off the loader
         getActivity().getLoaderManager().initLoader(FAVOURITE_LOADER, null, this);
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        // When tablets rotate, saves the currently selected list item
+        if (mPosition != GridView.INVALID_POSITION) {
+            outState.putInt(SELECTED_KEY, mPosition);
+        }
+        super.onSaveInstanceState(outState);
     }
 
     @Nullable
@@ -72,8 +85,14 @@ public class FavouriteFragment extends Fragment implements
                             getString(cursor.getColumnIndex(MovieEntry._ID));
                     ((Callback)getActivity()).onFavouriteSelected(MovieEntry.buildMovieUriWithId(columnId));
                 }
+                mPosition = i;
             }
         });
+
+        // If there's instance state, mine it for useful info
+        if (savedInstanceState != null && savedInstanceState.containsKey(SELECTED_KEY)) {
+            mPosition = savedInstanceState.getInt(SELECTED_KEY);
+        }
 
         return rootView;
     }
@@ -100,6 +119,12 @@ public class FavouriteFragment extends Fragment implements
             mEmptyStateTextView.setText(R.string.empty_favourite_gridview_message);
         }
         mCursorAdapter.swapCursor(cursor);
+
+        if (mPosition != ListView.INVALID_POSITION) {
+            // If we don't need to restart the loader, and there's a desired position to restore
+            // to, do so now.
+            favouriteGridView.smoothScrollToPosition(mPosition);
+        }
     }
 
     @Override
