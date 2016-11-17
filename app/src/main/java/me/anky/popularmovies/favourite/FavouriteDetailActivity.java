@@ -7,6 +7,8 @@ import me.anky.popularmovies.R;
 
 public class FavouriteDetailActivity extends AppCompatActivity {
 
+    public static final String LOG_TAG = FavouriteActivity.class.getSimpleName();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

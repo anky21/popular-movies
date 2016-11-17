@@ -6,13 +6,12 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 
 import me.anky.popularmovies.R;
+import me.anky.popularmovies.Utilities;
 
 public class FavouriteActivity extends AppCompatActivity
         implements FavouriteFragment.Callback {
 
     private final String LOG_TAG = FavouriteActivity.class.getSimpleName();
-
-    private boolean mTwoPane;
 
     private static final String FAVOURITEDETAILFRAGMENT_TAG = "FDFTAG";
 
@@ -20,22 +19,18 @@ public class FavouriteActivity extends AppCompatActivity
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_favourite);
-        if(findViewById(R.id.favourite_detail_contaier) != null){
-            mTwoPane = true;
+        if(Utilities.isTablet(getApplicationContext())){
             if(savedInstanceState == null) {
                 getSupportFragmentManager().beginTransaction()
                         .replace(R.id.favourite_detail_contaier, new FavouriteDetailFragment(),
                                 FAVOURITEDETAILFRAGMENT_TAG).commit();
-            } else {
-                mTwoPane = false;
-
             }
         }
     }
 
     @Override
     public void onFavouriteSelected(Uri contentUri) {
-        if(mTwoPane){
+        if(Utilities.isTablet(getApplicationContext())){
             Bundle args = new Bundle();
             args.putParcelable(FavouriteDetailFragment.MOVIE_URI, contentUri);
 

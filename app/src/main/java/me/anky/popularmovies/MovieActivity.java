@@ -10,7 +10,6 @@ import me.anky.popularmovies.Trailer.TrailerFragment;
 public class MovieActivity extends AppCompatActivity
         implements MovieActivityFragment.MovieCallback {
     private static final String LOG_TAG = MovieActivity.class.getSimpleName();
-    public boolean mTwoPane;
 
     private static final String DETAILFRAGMENT_TAG = "DFTAG";
     private static final String TRAILERFRAGMENT_TAG = "TFTAG";
@@ -21,21 +20,18 @@ public class MovieActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.movie_activity);
 
-        if (findViewById(R.id.fragment_detail_container) != null) {
-            mTwoPane = true;
+        if (Utilities.isTablet(getApplicationContext())) {
             if (savedInstanceState == null) {
                 getSupportFragmentManager().beginTransaction()
                         .replace(R.id.fragment_detail_container, new DetailFragment(),
                                 DETAILFRAGMENT_TAG).commit();
             }
-        } else {
-            mTwoPane = false;
         }
     }
 
     @Override
     public void onItemSelected(PopularMovie movieData) {
-        if (mTwoPane) {
+        if (Utilities.isTablet(getApplicationContext())) {
             Bundle args = new Bundle();
             args.putParcelable("MOVIE_DATA", movieData);
             // Replace DetailFragment
