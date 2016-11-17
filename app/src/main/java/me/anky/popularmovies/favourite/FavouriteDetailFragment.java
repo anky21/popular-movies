@@ -72,6 +72,12 @@ public class FavouriteDetailFragment extends Fragment implements
     public FavouriteDetailFragment() {
     }
 
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        getLoaderManager().initLoader(FAVOURITE_LOADER, null, this);
+    }
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container,
@@ -98,8 +104,14 @@ public class FavouriteDetailFragment extends Fragment implements
 
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
-        getLoaderManager().initLoader(FAVOURITE_LOADER, null, this);
         super.onActivityCreated(savedInstanceState);
+//        getLoaderManager().restartLoader(FAVOURITE_LOADER, null, this);
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        getLoaderManager().restartLoader(FAVOURITE_LOADER, null, this);
     }
 
     @Override

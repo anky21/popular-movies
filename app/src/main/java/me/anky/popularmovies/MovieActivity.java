@@ -3,7 +3,6 @@ package me.anky.popularmovies;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 
 import me.anky.popularmovies.Review.MovieReviewFragment;
 import me.anky.popularmovies.Trailer.TrailerFragment;
@@ -28,22 +27,15 @@ public class MovieActivity extends AppCompatActivity
                 getSupportFragmentManager().beginTransaction()
                         .replace(R.id.fragment_detail_container, new DetailFragment(),
                                 DETAILFRAGMENT_TAG).commit();
-//                getSupportFragmentManager().beginTransaction()
-//                        .replace(R.id.fragment_trailer_container, new TrailerFragment(),
-//                                TRAILERFRAGMENT_TAG).commit();
-//                getSupportFragmentManager().beginTransaction()
-//                        .replace(R.id.fragment_review_container, new MovieReviewFragment(),
-//                                REVIEWFRAGMENT_TAG).commit();
-            } else {
-                mTwoPane = false;
             }
+        } else {
+            mTwoPane = false;
         }
     }
 
     @Override
     public void onItemSelected(PopularMovie movieData) {
         if (mTwoPane) {
-            Log.v(LOG_TAG, "Testing mTwoPane " + mTwoPane);
             Bundle args = new Bundle();
             args.putParcelable("MOVIE_DATA", movieData);
             // Replace DetailFragment
