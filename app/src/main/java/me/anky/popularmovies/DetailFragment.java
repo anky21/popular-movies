@@ -19,6 +19,10 @@ import com.squareup.picasso.Picasso;
 import java.net.MalformedURLException;
 import java.text.DecimalFormat;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.Unbinder;
+
 import static me.anky.popularmovies.data.MovieContract.MovieEntry;
 
 /**
@@ -29,8 +33,24 @@ public class DetailFragment extends Fragment {
     private static final String LOG_TAG = DetailFragment.class.getSimpleName();
     ContentResolver mContentResolver;
 
-    private ImageView mFavouriteIcon;
-    private TextView mFavouriteTextView;
+    private Unbinder unbinder;
+
+    @BindView(R.id.favorite_icon)
+    ImageView mFavouriteIcon;
+    @BindView(R.id.favourite_text_view)
+    TextView mFavouriteTextView;
+    @BindView(R.id.tv_title)
+    TextView titleTV;
+    @BindView(R.id.iv_movie_thumb)
+    ImageView thumbIV;
+    @BindView(R.id.tv_release_date)
+    TextView releaseDateTV;
+    @BindView(R.id.tv_rating)
+    TextView voteAverageTV;
+    @BindView(R.id.tv_overview)
+    TextView plotTV;
+    @BindView(R.id.favourite_view)
+    LinearLayout favouriteView;
 
     public DetailFragment() {
     }
@@ -39,6 +59,7 @@ public class DetailFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.detail_fragment, container, false);
+        unbinder = ButterKnife.bind(this, rootView);
 
         mContentResolver = getActivity().getContentResolver();
         Bundle args = getArguments();
@@ -53,12 +74,7 @@ public class DetailFragment extends Fragment {
             final double voteAverage = mMovieData.getVoteAverage();
             final String overview = mMovieData.getOverview();
 
-            // Display movie title in a text view
-            TextView titleTV = (TextView) rootView.findViewById(R.id.tv_title);
             titleTV.setText(originalTitle);
-
-            // Show the thumbnail of the movie in an image view
-            ImageView thumbIV = (ImageView) rootView.findViewById(R.id.iv_movie_thumb);
 
             String myUrl = null;
             try {
@@ -66,26 +82,21 @@ public class DetailFragment extends Fragment {
             } catch (MalformedURLException e) {
                 e.printStackTrace();
             }
-            Picasso.with(getActivity()).load(myUrl).into(thumbIV);
 
-            // Display the release date in a text view
-            TextView releaseDateTV = (TextView) rootView.findViewById(R.id.tv_release_date);
+            Picasso.with(getActivity())
+                    .load(myUrl)
+                    .placeholder(R.drawable.loading_icon) // Displays this image while loading
+                    .error(R.drawable.errorstop)    // Displays this image when there is an error
+                    .into(thumbIV);
+
             releaseDateTV.setText(releaseDate);
 
-            // Convert the double vote average to String and display it in a text view
-            final TextView voteAverageTV = (TextView) rootView.findViewById(R.id.tv_rating);
             // Change decimal digits from 2 to 1
             DecimalFormat df = new DecimalFormat("#.#");
             String voteAverageString = df.format(voteAverage);
             voteAverageTV.setText("Rating: " + voteAverageString + "/10");
 
-            // Display the overview of the movie
-            TextView plotTV = (TextView) rootView.findViewById(R.id.tv_overview);
             plotTV.setText(overview);
-
-            LinearLayout favouriteView = (LinearLayout) rootView.findViewById(R.id.favourite_view);
-            mFavouriteIcon = (ImageView) rootView.findViewById(R.id.favorite_icon);
-            mFavouriteTextView = (TextView) rootView.findViewById(R.id.favourite_text_view);
 
             // Set favourite image and text after figuring out whether the movie is favourited
             setFavouriteImageText(isFavourited(movieId), mFavouriteIcon, mFavouriteTextView);
@@ -126,6 +137,12 @@ public class DetailFragment extends Fragment {
             });
         }
         return rootView;
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        unbinder.unbind();
     }
 
     public static void setFavouriteImageText(boolean favourite, ImageView imageView, TextView textView) {

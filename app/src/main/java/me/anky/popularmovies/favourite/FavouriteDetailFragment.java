@@ -21,6 +21,9 @@ import com.squareup.picasso.Picasso;
 
 import java.net.MalformedURLException;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.Unbinder;
 import me.anky.popularmovies.QueryUtils;
 import me.anky.popularmovies.R;
 
@@ -36,6 +39,7 @@ public class FavouriteDetailFragment extends Fragment implements
 
     ContentResolver mContentResolver;
     private static final int FAVOURITE_LOADER = 23;
+    private Unbinder unbinder;
 
     static final String MOVIE_URI = "URI";
 
@@ -60,14 +64,22 @@ public class FavouriteDetailFragment extends Fragment implements
     public static final int COL_MOVE_RATING = 5;
     public static final int COL_MOVIE_OVERVIEW = 6;
 
-    private TextView mTitleTv;
-    private ImageView mThumbIv;
-    private TextView mReleaseDateTv;
-    private TextView mVoteAverageTv;
-    private TextView mPlotTv;
-    private LinearLayout mFavouriteView;
-    private ImageView mFavouriteIcon;
-    private TextView mFavouriteTv;
+    @BindView(R.id.favorite_icon)
+    ImageView mFavouriteIcon;
+    @BindView(R.id.favourite_text_view)
+    TextView mFavouriteTextView;
+    @BindView(R.id.tv_title)
+    TextView titleTV;
+    @BindView(R.id.iv_movie_thumb)
+    ImageView thumbIV;
+    @BindView(R.id.tv_release_date)
+    TextView releaseDateTV;
+    @BindView(R.id.tv_rating)
+    TextView voteAverageTV;
+    @BindView(R.id.tv_overview)
+    TextView plotTV;
+    @BindView(R.id.favourite_view)
+    LinearLayout favouriteView;
 
     public FavouriteDetailFragment() {
     }
@@ -89,19 +101,17 @@ public class FavouriteDetailFragment extends Fragment implements
         View rootView = inflater.inflate(R.layout.favourite_detail_fragment, container, false);
         mContentResolver = getActivity().getContentResolver();
 
-        mTitleTv = (TextView) rootView.findViewById(R.id.tv_title);
-        mThumbIv = (ImageView) rootView.findViewById(R.id.iv_movie_thumb);
-        mReleaseDateTv = (TextView) rootView.findViewById(R.id.tv_release_date);
-        mVoteAverageTv = (TextView) rootView.findViewById(R.id.tv_rating);
-        mPlotTv = (TextView) rootView.findViewById(R.id.tv_overview);
-
-        mFavouriteView = (LinearLayout) rootView.findViewById(R.id.favourite_view);
-        mFavouriteIcon = (ImageView) rootView.findViewById(R.id.favorite_icon);
-        mFavouriteTv = (TextView) rootView.findViewById(R.id.favourite_text_view);
+        unbinder = ButterKnife.bind(this, rootView);
 
         getLoaderManager().initLoader(FAVOURITE_LOADER, null, this);
 
         return rootView;
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        unbinder.unbind();
     }
 
     @Override
@@ -124,7 +134,7 @@ public class FavouriteDetailFragment extends Fragment implements
         if (data != null && data.moveToFirst()) {
             final String movieId = data.getString(COL_MOVIE_ID);
             final String movieTitle = data.getString(COL_MOVIE_TITLE);
-            mTitleTv.setText(movieTitle);
+            titleTV.setText(movieTitle);
 
             final String posterPath = data.getString(COL_MOVIE_PATH);
             String myUrl = null;
@@ -133,24 +143,29 @@ public class FavouriteDetailFragment extends Fragment implements
             } catch (MalformedURLException e) {
                 e.printStackTrace();
             }
-            Picasso.with(getActivity()).load(myUrl).into(mThumbIv);
+
+            Picasso.with(getActivity())
+                    .load(myUrl)
+                    .placeholder(R.drawable.loading_icon) // Displays this image while loading
+                    .error(R.drawable.errorstop)    // Displays this image when there is an error
+                    .into(thumbIV);
 
             final String releaseDate = data.getString(COL_MOVIE_DATE);
-            mReleaseDateTv.setText(releaseDate);
+            releaseDateTV.setText(releaseDate);
 
             final String voteAverage = data.getString(COL_MOVE_RATING);
-            mVoteAverageTv.setText(voteAverage);
+            voteAverageTV.setText(voteAverage);
 
             final String moviePlot = data.getString(COL_MOVIE_OVERVIEW);
-            mPlotTv.setText(moviePlot);
+            plotTV.setText(moviePlot);
 
             mFavouriteIcon.setImageResource(R.drawable.ic_favorite_24dp);
-            mFavouriteTv.setText(R.string.favourited);
+            mFavouriteTextView.setText(R.string.favourited);
 
-            mFavouriteView.setOnClickListener(new View.OnClickListener() {
+            favouriteView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    String favouriteText = mFavouriteTv.getText().toString();
+                    String favouriteText = mFavouriteTextView.getText().toString();
 
                     //Check whether the movie is favourited
                     if (favouriteText.equals(getString(R.string.favourited))) {
@@ -163,7 +178,7 @@ public class FavouriteDetailFragment extends Fragment implements
                         );
 
                         // Update favourite icon and text
-                        setFavouriteImageText(false, mFavouriteIcon, mFavouriteTv);
+                        setFavouriteImageText(false, mFavouriteIcon, mFavouriteTextView);
                     } else {
                         // Add as favourite and insert it into the database
                         ContentValues values = new ContentValues();
@@ -177,7 +192,7 @@ public class FavouriteDetailFragment extends Fragment implements
                         Uri newUri = mContentResolver.insert(MovieEntry.CONTENT_URI, values);
 
                         // Update favourite icon and text
-                        setFavouriteImageText(true, mFavouriteIcon, mFavouriteTv);
+                        setFavouriteImageText(true, mFavouriteIcon, mFavouriteTextView);
                     }
                 }
             });

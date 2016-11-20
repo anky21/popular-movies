@@ -58,7 +58,11 @@ public class PopularMovieAdapter extends ArrayAdapter<PopularMovie> {
         // Find the ImageView in the list_item.xml layout with the ID image
         ImageView imageView = (ImageView) listItemView.findViewById(R.id.poster_of_the_movie);
 
-        Picasso.with(getContext()).load(myUrl).into(imageView);
+        Picasso.with(getContext())
+                .load(myUrl)
+                .placeholder(R.drawable.loading_icon) // Displays this image while loading
+                .error(R.drawable.errorstop)    // // Displays this image when there is an error
+                .into(imageView);
 
         // Return the whole list item layout so that it can be shown in the GridView
         return listItemView;

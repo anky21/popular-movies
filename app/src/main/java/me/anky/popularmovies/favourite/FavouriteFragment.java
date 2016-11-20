@@ -16,6 +16,9 @@ import android.widget.GridView;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.Unbinder;
 import me.anky.popularmovies.R;
 import me.anky.popularmovies.Utilities;
 
@@ -28,11 +31,16 @@ import static me.anky.popularmovies.data.MovieContract.MovieEntry;
 public class FavouriteFragment extends Fragment implements
         LoaderManager.LoaderCallbacks<Cursor> {
 
+    private Unbinder unbinder;
+
     // Identifier for the Loader
     private static final int FAVOURITE_LOADER = 0;
     FavouriteCursorAdapter mCursorAdapter;
-    private TextView mEmptyStateTextView;
-    private GridView favouriteGridView;
+
+    @BindView(R.id.empty_list_view)
+    TextView mEmptyStateTextView;
+    @BindView(R.id.movie_collection_grid_view)
+    GridView favouriteGridView;
     private int mPosition = GridView.INVALID_POSITION;
     private static final String SELECTED_KEY = "selected_position";
 
@@ -44,7 +52,8 @@ public class FavouriteFragment extends Fragment implements
         public void onFavouriteSelected(Uri contentUri);
     }
 
-    public FavouriteFragment(){}
+    public FavouriteFragment() {
+    }
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -67,9 +76,7 @@ public class FavouriteFragment extends Fragment implements
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.favourite_fragment, container, false);
 
-        mEmptyStateTextView = (TextView) rootView.findViewById(R.id.empty_list_view);
-
-        favouriteGridView = (GridView) rootView.findViewById(R.id.movie_collection_grid_view);
+        unbinder = ButterKnife.bind(this,rootView);
 
         mCursorAdapter = new FavouriteCursorAdapter(getContext(), null);
 
@@ -84,7 +91,7 @@ public class FavouriteFragment extends Fragment implements
                 if (cursor != null) {
                     String columnId = cursor.
                             getString(cursor.getColumnIndex(MovieEntry._ID));
-                    ((Callback)getActivity()).onFavouriteSelected(MovieEntry.buildMovieUriWithId(columnId));
+                    ((Callback) getActivity()).onFavouriteSelected(MovieEntry.buildMovieUriWithId(columnId));
                 }
                 mPosition = i;
             }
@@ -96,6 +103,12 @@ public class FavouriteFragment extends Fragment implements
         }
 
         return rootView;
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        unbinder.unbind();
     }
 
     @Override
@@ -127,7 +140,7 @@ public class FavouriteFragment extends Fragment implements
             favouriteGridView.smoothScrollToPosition(mPosition);
         }
 
-        if(Utilities.isTablet(getContext())){
+        if (Utilities.isTablet(getContext())) {
             favouriteGridView.performItemClick(favouriteGridView.getChildAt(0), 0, mCursorAdapter.getItemId(0));
         }
     }

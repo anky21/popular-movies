@@ -51,11 +51,10 @@ public class FavouriteCursorAdapter extends CursorAdapter {
             e.printStackTrace();
         }
 
-        Picasso.with(context).load(myUrl).into(posterImage);
-
-
-
+        Picasso.with(context)
+                .load(myUrl)
+                .placeholder(R.drawable.loading_icon) // Displays this image while loading
+                .error(R.drawable.errorstop)    // Displays this image when there is an error
+                .into(posterImage);
     }
-
-
 }
