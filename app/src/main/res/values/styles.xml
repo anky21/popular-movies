@@ -19,6 +19,14 @@
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:textAppearance">?android:textAppearanceMedium</item>
+        <item name="android:textIsSelectable">true</item>
+    </style>
+
+    <!-- Empty list view message: centre style -->
+    <style name="TextViewBasic.CenterEmptyMessage">
+        <item name="android:layout_centerInParent">true</item>
+        <item name="android:paddingLeft">@dimen/Medium_padding</item>
+        <item name="android:paddingRight">@dimen/Medium_padding</item>
     </style>
 
     <!-- Basic TextView Larger style -->
@@ -58,4 +66,6 @@
     <style name="FragmentTabTextAppearance" parent="TextAppearance.Design.Tab">
         <item name="android:textColor">#A8A19E</item>
     </style>
+
+
 </resources>

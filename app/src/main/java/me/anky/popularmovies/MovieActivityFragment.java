@@ -118,6 +118,12 @@ public class MovieActivityFragment extends Fragment implements
                 lm.restartLoader(MOVIE_LOADER_ID, null, MovieActivityFragment.this);
                 break;
             }
+            case R.id.sortby_playing: {
+                sharedPreferences.edit().putInt(getString(R.string.sort_order_key),
+                        R.string.sort_order_playing).apply();
+                lm.restartLoader(MOVIE_LOADER_ID, null, MovieActivityFragment.this);
+                break;
+            }
             case R.id.sortby_favourite: {
                 Intent intent = new Intent(getActivity(), FavouriteActivity.class);
                 startActivity(intent);
@@ -183,6 +189,9 @@ public class MovieActivityFragment extends Fragment implements
                 break;
             case R.string.sort_order_top_rated:
                 mSortBy = "top_rated";
+                break;
+            case R.string.sort_order_playing:
+                mSortBy = "now_playing";
                 break;
         }
 

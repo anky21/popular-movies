@@ -17,9 +17,7 @@
 
     <TextView
         android:id="@+id/empty_review_textview"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginBottom="@dimen/Medium_padding"/>
+        style="@style/TextViewBasic.CenterEmptyMessage"
+        android:layout_gravity="center_horizontal"/>
 
 </LinearLayout>

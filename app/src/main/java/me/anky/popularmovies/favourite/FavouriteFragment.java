@@ -14,6 +14,7 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.GridView;
 import android.widget.ListView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import butterknife.BindView;
@@ -39,8 +40,10 @@ public class FavouriteFragment extends Fragment implements
 
     @BindView(R.id.empty_list_view)
     TextView mEmptyStateTextView;
-    @BindView(R.id.movie_collection_grid_view)
+    @BindView(R.id.movie_activity_grid_view)
     GridView favouriteGridView;
+    @BindView(R.id.progress_bar)
+    ProgressBar progressBar;
     private int mPosition = GridView.INVALID_POSITION;
     private static final String SELECTED_KEY = "selected_position";
 
@@ -74,9 +77,10 @@ public class FavouriteFragment extends Fragment implements
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View rootView = inflater.inflate(R.layout.favourite_fragment, container, false);
+        View rootView = inflater.inflate(R.layout.movie_activity_fragment, container, false);
 
         unbinder = ButterKnife.bind(this,rootView);
+        progressBar.setVisibility(View.GONE);
 
         mCursorAdapter = new FavouriteCursorAdapter(getContext(), null);
 

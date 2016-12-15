@@ -20,8 +20,12 @@
     <string name="sort_order_key">sort_order</string>
     <string name="sort_order_popular" translatable="false">0</string>
     <string name="sort_order_top_rated" translatable="false">1</string>
+    <string name="sort_order_playing" translatable="false">3</string>
+    <string name="sort_order_upcoming" translatable="false">4</string>
     <string name="sortby_popular_label">Most Popular</string>
     <string name="sortby_rating_label">Top Rated</string>
+    <string name="sortby_nowplaying_label">Now playing</string>
+    <string name="sortby_upcoming_label">Upcoming</string>
     <string name="sortby_favourite_label">Favourites</string>
 
     <!-- Page titles in the Detail Activity -->

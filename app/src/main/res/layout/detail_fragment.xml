@@ -6,75 +6,73 @@
 
     <LinearLayout
         android:id="@+id/activity_detailed"
-        android:layout_height="match_parent"
         android:layout_width="match_parent"
+        android:layout_height="match_parent"
         android:orientation="vertical">
 
         <LinearLayout
-            android:layout_height="wrap_content"
             android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:orientation="horizontal"
             android:padding="@dimen/small_padding">
 
             <ImageView
-                style="@style/ThumbImageView"
                 android:id="@+id/iv_movie_thumb"
-                />
+                style="@style/ThumbImageView" />
 
             <LinearLayout
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:layout_width="0dp"
                 android:orientation="vertical"
                 android:paddingLeft="@dimen/Medium_padding">
 
                 <TextView
-                    style="@style/TextViewBasic.Title"
                     android:id="@+id/tv_title"
-                    tools:text="Testing"
-                    android:textIsSelectable="true"/>
+                    style="@style/TextViewBasic.Title"
+                    tools:text="Testing" />
 
                 <TextView
-                    style="@style/TextViewBasic.Large"
                     android:id="@+id/tv_release_date"
+                    style="@style/TextViewBasic.Large"
+                    android:textStyle="italic"
                     tools:text="2016" />
 
                 <TextView
-                    style="@style/TextViewBasic"
                     android:id="@+id/tv_rating"
+                    style="@style/TextViewBasic"
                     tools:text="8.1/10" />
 
                 <LinearLayout
                     android:id="@+id/favourite_view"
-                    android:layout_height="wrap_content"
                     android:layout_width="match_parent"
-                    android:orientation="horizontal"
-                    >
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
 
                     <ImageView
                         android:id="@+id/favorite_icon"
-                        android:layout_height="24dp"
                         android:layout_width="24dp"
-                        tools:src="@drawable/ic_favorite_border_black_24dp"/>
+                        android:layout_height="24dp"
+                        tools:src="@drawable/ic_favorite_border_black_24dp" />
 
                     <TextView
                         android:id="@+id/favourite_text_view"
-                        android:layout_height="wrap_content"
                         android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
                         android:layout_gravity="center_vertical"
-                        tools:text="Favourite"/>
+                        android:textAppearance="?android:textAppearanceMedium"
+                        android:layout_marginLeft="@dimen/small_padding"
+                        tools:text="Favourite" />
                 </LinearLayout>
 
             </LinearLayout>
         </LinearLayout>
 
         <TextView
-            style="@style/TextViewBasic"
             android:id="@+id/tv_overview"
+            style="@style/TextViewBasic"
             android:paddingLeft="@dimen/small_padding"
             android:paddingRight="@dimen/small_padding"
-            tools:text="I just love coding."
-            android:textIsSelectable="true"/>
-
+            tools:text="I just love coding." />
     </LinearLayout>
 </ScrollView>

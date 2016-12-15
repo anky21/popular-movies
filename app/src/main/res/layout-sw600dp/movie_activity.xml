@@ -31,11 +31,9 @@
                 android:layout_height="wrap_content" />
 
             <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                style="@style/TextViewBasic.Large"
                 android:padding="@dimen/Medium_padding"
-                android:text="@string/trailer_section"
-                android:textAppearance="?android:textAppearanceLarge" />
+                android:text="@string/trailer_section" />
 
             <FrameLayout
                 android:id="@+id/fragment_trailer_container"
@@ -44,11 +42,9 @@
                 android:layout_height="wrap_content" />
 
             <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                style="@style/TextViewBasic.Large"
                 android:padding="@dimen/Medium_padding"
-                android:text="@string/review_section"
-                android:textAppearance="?android:textAppearanceLarge" />
+                android:text="@string/review_section" />
 
             <FrameLayout
                 android:id="@+id/fragment_review_container"

@@ -41,5 +41,4 @@ dependencies {
     // Field and method binding for views with Butter Knife
     compile 'com.jakewharton:butterknife:8.4.0'
     annotationProcessor 'com.jakewharton:butterknife-compiler:8.4.0'
-    compile 'com.android.support:cardview-v7:24.0.+'
 }

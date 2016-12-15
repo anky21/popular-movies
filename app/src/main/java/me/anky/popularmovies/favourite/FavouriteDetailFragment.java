@@ -98,7 +98,7 @@ public class FavouriteDetailFragment extends Fragment implements
         if (args != null) {
             mUri = args.getParcelable(FavouriteDetailFragment.MOVIE_URI);
         }
-        View rootView = inflater.inflate(R.layout.favourite_detail_fragment, container, false);
+        View rootView = inflater.inflate(R.layout.detail_fragment, container, false);
         mContentResolver = getActivity().getContentResolver();
 
         unbinder = ButterKnife.bind(this, rootView);

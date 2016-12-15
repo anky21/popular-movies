@@ -1,24 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="me.anky.popularmovies.MovieActivity">
 
+    <include layout="@layout/movie_activity_fragment"/>
 
-    <GridView
-        android:id="@+id/movie_collection_grid_view"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:numColumns="2"/>
-
-    <TextView
-        android:id="@+id/empty_list_view"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
-        android:paddingLeft="@dimen/Medium_padding"
-        android:paddingRight="@dimen/Medium_padding"
-        android:textAppearance="?android:textAppearanceMedium" />
-
-</RelativeLayout>
+</FrameLayout>
